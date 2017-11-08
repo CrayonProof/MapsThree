@@ -1,0 +1,7 @@
+#Tue Oct 17 14:07:41 MDT 2017
+base.0=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_69a2e294eee57ee67def4884222bf4fd96ed814f
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_edaef0cf69ba39666644fae2f7630bcfcb10d0f7/classes.dex
+base.1=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_edaef0cf69ba39666644fae2f7630bcfcb10d0f7
+file.0=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_69a2e294eee57ee67def4884222bf4fd96ed814f/classes.dex
