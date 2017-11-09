@@ -18,21 +18,21 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import java.util.ArrayList;
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.List;
 import android.view.View;
-import android.view.View.OnClickListener;
+//import android.view.View.OnClickListener;
 import android.widget.Button;
-import java.text.*;
-import java.util.Date;
-import java.io.File;
-import java.io.FileWriter;
-import android.os.Environment;
-import java.io.IOException;
-import android.util.Log;
-import java.lang.Math;
-import java.util.Vector;
-//soopre
+//import java.text.*;
+//import java.util.Date;
+//import java.io.File;
+//import java.io.FileWriter;
+//import android.os.Environment;
+//import java.io.IOException;
+//import android.util.Log;
+//import java.lang.Math;
+//import java.util.Vector;
+import java.awt.geom.e rou ;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -180,7 +180,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if ( i >= 3)
                 {
                     i++;
-                    loc = getRelativeLocation(arg0);
+                    loc = findInx(arg0);
 
                     // create new marker when user long clicks
                     markiboi.add(loc, (mMap.addMarker(new MarkerOptions()
@@ -229,223 +229,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         seq.add(provo);
     }
 
-    public double calculateByDistance(LatLng StartP, LatLng EndP) {
-        int Radius = 6371;// radius of earth in Km
-        double lat1 = StartP.latitude;
-        double lat2 = EndP.latitude;
-        double lon1 = StartP.longitude;
-        double lon2 = EndP.longitude;
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(lat1))
-                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
-                * Math.sin(dLon / 2);
-        double c = 2 * Math.asin(Math.sqrt(a));
-        double valueResult = Radius * c;
-        double km = valueResult / 1;
-        DecimalFormat newFormat = new DecimalFormat("####");
-        int kmInDec = Integer.valueOf(newFormat.format(km));
-        double meter = valueResult % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                + " Meter   " + meterInDec);
-
-        return Radius * c;
-    }
-
-    Vector v = new Vector();
-
-    public int findNearest(LatLng x)
+    public int findInx (LatLng x)
     {
-        int minDistInx = 0;
-        double presDist = (calculateByDistance(x, seq.get(0)));
-        double minDist = presDist;
+        List<Double> dists = new ArrayList<Double>();
+        List<Integer> inxs = new ArrayList<Integer>();
 
-        for (int in = 0; in < i; in++)
+        for (int j = 0; j < i; j++ )
         {
-            presDist = (calculateByDistance(x, seq.get(in)));
-
-            if (presDist < minDist)
-            {
-                minDist = presDist;
-                minDistInx = in;
-            }
-        }
-        return minDistInx;
-    }
-
-    public int q(double tx, double ty)
-    {
-        if ((tx > 0)&&(ty > 0))
-        {
-            return(1);
-        }
-        else if ((tx > 0)&&(ty < 0))
-        {
-            return(2);
-        }
-        else if ((tx < 0)&&(ty < 0))
-        {
-            return(3);
-        }
-        else if ((tx < 0)&&(ty > 0))
-        {
-            return(4);
-        }
-        else
-        {
-            return(0);
+            dists.add(findLineDist(ax, bx, ay, by))
         }
     }
 
-    public double totadeg(int q,double angle)
-    {
-        if (q == 1)
-        {
-            return (90 - angle);
-        }
-        else if (q == 2)
-        {
-            return (90 + angle);
-        }
-        else if (q == 3)
-        {
-            return (270 - angle);
-        }
-        else if (q == 4)
-        {
-            return (270 + angle);
-        }
-        else
-        {
-            return (0);
-        }
-    }
-
-    //********
-
-    public int getRelativeLocation(LatLng x)
-    {
-        int nearest = findNearest(x);
-        int up;
-        int down;
-        if ((nearest + 1) > (seq.size()-1))
-        {
-            up = 0;
-        }
-        else
-        {
-            up = nearest + 1 ;
-        }
-        if (nearest == 0)
-        {
-            down = seq.size()-1;
-        }
-        else
-        {
-            down = nearest - 1 ;
-        }
-        double olat = seq.get(nearest).latitude;
-        double olon = seq.get(nearest).longitude;
-        double alat = seq.get(down).latitude;
-        double alon = seq.get(down).longitude;
-        double blat = seq.get(up).latitude;
-        double blon = seq.get(up).longitude;
-        double ay = alat - olat;
-        double ax = alon - olon;
-        double by = blat - olat;
-        double bx = blon - olon;
-        double xy = (x.latitude)-olat;
-        double xx = (x.longitude)-olon;
-        double adeg = ((Math.atan(Math.abs(ay/ax)))*180)/Math.PI;
-        double bdeg = ((Math.atan(Math.abs(by/bx)))*180)/Math.PI;
-        double xdeg = ((Math.atan(Math.abs(xy/xx)))*180)/Math.PI;
-        int aq =  q(ax, ay);
-        int bq =  q(bx, by);
-        int xq =  q(xx, xy);
-        double awo = totadeg(aq, adeg);
-        double bwo = totadeg(bq, bdeg);
-        double xwo = totadeg(xq, xdeg);
-        double minwo = 0;
-        double maxwo = 0;
-        int minin = 0;
-        int maxin = 0;
-        if (awo < bwo)
-        {
-            minwo = awo;
-            minin = nearest;
-            maxwo = bwo;
-            maxin = up;
-        }
-        else if (bwo < awo)
-        {
-            if (ax>0) {
-                minwo = bwo;
-                minin = up;
-                maxwo = awo;
-                maxin = nearest;
-            }
-            else
-            {
-                minwo = bwo;
-                minin = nearest;
-                maxwo = awo;
-                maxin = down;
-            }
-        }
-        double bisec = (((bwo - awo)/2) + awo);
-        if ((xwo < minwo)||( xwo > maxwo))
-        {
-            bisec = bisec - 180;
-            if (bisec < 0)
-            {
-                bisec = 360 - bisec;
-                if ((xwo - (360-bisec)) > 0)
-                {
-                    return minin;
-                }
-                else if ((xwo - (360-bisec)) < 0)
-                {
-                    return maxin;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-            else
-            {
-                if ((xwo - bisec) > 0)
-                {
-                    return minin;
-                }
-                else if ((xwo - bisec) < 0)
-                {
-                    return maxin;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-        else
-        {
-            if (xwo < bisec)
-            {
-                return minin;
-            }
-            else if (xwo > bisec)
-            {
-                return maxin;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-
-    }
 }
