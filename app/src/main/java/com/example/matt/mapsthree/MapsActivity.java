@@ -32,7 +32,6 @@ import android.widget.Button;
 //import android.util.Log;
 //import java.lang.Math;
 //import java.util.Vector;
-import java.awt.geom.e rou ;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -236,8 +235,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (int j = 0; j < i; j++ )
         {
-            dists.add(findLineDist(ax, bx, ay, by))
+            //dists.add(findLineDist(ax, bx, ay, by))
         }
+        return 0;
     }
 
 }
