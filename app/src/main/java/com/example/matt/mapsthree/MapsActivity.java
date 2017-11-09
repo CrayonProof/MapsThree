@@ -236,7 +236,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (int j = 0; j < i; j++ )
         {
             //dists.add(findLineDist(ax, bx, ay, by))
-            //gg
+            //YAAAAAAAAAAAAAAAAAAAAAAAAYYY
         }
         return 0;
     }
