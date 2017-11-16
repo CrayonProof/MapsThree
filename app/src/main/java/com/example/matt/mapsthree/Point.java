@@ -14,7 +14,12 @@ public class Point {
 
     // Method used to display X and Y coordinates
     // of a point
-    static void displayPoint(Point p) {
-        System.out.println("(" + p.x + ", " + p.y + ")");
+    public double getx(Point p)
+    {
+        return(p.x);
+    }
+    public double gety(Point p)
+    {
+        return(p.y);
     }
 }
