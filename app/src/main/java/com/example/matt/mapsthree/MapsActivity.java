@@ -71,7 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (FileHelper.saveToFile( txtInput.getText().toString())){
+                if (FileHelper.saveToFile(seq, i)){
                     Toast.makeText(MapsActivity.this,"Saved to file",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(MapsActivity.this,"Error save file!!!",Toast.LENGTH_SHORT).show();
