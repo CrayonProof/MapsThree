@@ -18,25 +18,25 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import java.util.ArrayList;
-//import java.util.Collections;
 import java.util.List;
 import android.view.View;
-//import android.view.View.OnClickListener;
 import android.widget.Button;
-//import java.text.*;
-//import java.util.Date;
-//import java.io.File;
-//import java.io.FileWriter;
-//import android.os.Environment;
-//import java.io.IOException;
-//import android.util.Log;
-//import java.lang.Math;
-//import java.util.Vector;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
+    Button btnRead , btnSave;
+    EditText txtInput;
+    TextView txtContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,42 +46,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        final Button button = (Button) findViewById(R.id.button2);
+        /*final Button button = (Button) findViewById(R.id.button2);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Toast.makeText(MapsActivity.this, "*Click*",
                         Toast.LENGTH_SHORT).show();            }
         });
-/*
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd");
-        Date now = new Date();
-        String fileName = formatter.format(now) + ".txt";//like 2016_01_12.txt
+        */
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_maps);
 
+        txtContent = (TextView) findViewById(R.id.txtContent);
+        txtInput = (EditText) findViewById(R.id.txtInput);
 
-        try
-        {
-            File root = new File(Environment.getExternalStorageDirectory()+File.separator+"Music_Folder", "Report Files");
-            //File root = new File(Environment.getExternalStorageDirectory(), "Notes");
-            if (!root.exists())
-            {
-                root.mkdirs();
+        btnRead = (Button) findViewById(R.id.btnRead);
+        btnRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtContent.setText(FileHelper.ReadFile(MapsActivity.this));
             }
-            File gpxfile = new File(root, fileName);
+        });
 
+        btnSave = (Button) findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (FileHelper.saveToFile( txtInput.getText().toString())){
+                    Toast.makeText(MapsActivity.this,"Saved to file",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MapsActivity.this,"Error save file!!!",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-            FileWriter writer = new FileWriter(gpxfile,true);
-            writer.append(sBody+"\n\n");
-            writer.flush();
-            writer.close();
-            Toast.makeText(this, "Data has been written to Report File", Toast.LENGTH_SHORT).show();
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-
-        }
-
-*/
     }
 
 
@@ -176,7 +173,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onMapLongClick (LatLng arg0){
                 // TODO Auto-generated method stub
 
-                if ( i >= 3)
+                if (false)// i >= 3)
                 {
                     i++;
                     loc = findInx(arg0);
@@ -192,7 +189,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     findLocation();
                     pline();
                 }
-                else if ( i < 3)
+                else if (true)// i < 3)
                 {
                     i++;
 
@@ -240,5 +237,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return 0;
     }
+
+
 
 }
