@@ -62,14 +62,14 @@ public class FileHelper {
                 file.createNewFile();
             }
             FileOutputStream bos = new FileOutputStream(file,false);
-            bos.write(("" + System.getProperty("line.separator")).getBytes());
+            bos.write(("").getBytes());
 
             String darti;
             for (int i = 0; i <= length; i++)
             {
                 darti = Double.toString(data.get(i).latitude) + "," + Double.toString(data.get(i).longitude);
                 FileOutputStream fos = new FileOutputStream(file, true);
-                fos.write((darti + System.getProperty("line.separator")).getBytes());
+                fos.write((darti + "\r\n").getBytes());
             }
 
             return true;
