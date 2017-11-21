@@ -65,4 +65,5 @@
         android:layout_alignParentBottom="true"
         android:scrollIndicators="bottom|right"
         android:editable="false" />
+
 </RelativeLayout>
