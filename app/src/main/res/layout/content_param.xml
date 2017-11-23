@@ -21,4 +21,6 @@
         android:visibility="visible"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="16dp" />
+
+    <include layout="@layout/activity_maps"/>
 </android.support.constraint.ConstraintLayout>
