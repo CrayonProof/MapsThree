@@ -1,6 +1,7 @@
 package com.example.matt.mapsthree;
 
 //import necessary packages
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -32,9 +33,15 @@ import android.widget.Toast;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    private static GoogleMap mMap;
+    public static int i = 0;
+    LatLng provo = new LatLng(40.26844786793794, -111.63785051554441);
+    public static List<LatLng> seq = new ArrayList<LatLng>();
+    public static List<Polyline> loneboi = new ArrayList<Polyline>();
+    public static List<Marker> markiboi = new ArrayList<Marker>();
+    List<Double> dist = new ArrayList<Double>();
 
-    Button btnRead , btnSave;
+    Button btnRead , btnSave, btnRef;
     EditText txtInput;
     TextView txtContent;
     @Override
@@ -80,7 +87,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        btnRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MapsActivity.this, ParamActivity.class));
+            }
+        });
 
+        btnRef = (Button) findViewById(R.id.btnRef);
+        btnRef.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pline();
+                rmark();
+            }
+        });
+    }
 
     /**
      * Manipulates the map once available.
@@ -91,7 +116,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-
+    public static boolean saveFile()
+    {
+        if (FileHelper.saveToFile(seq, i)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 //retrives location when user drags marker to new location, toasts latlng to screen
     public void findLocation() {
@@ -135,14 +167,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    LatLng provo = new LatLng(40.26844786793794, -111.63785051554441);
-    int i = 0;
-    List<LatLng> seq = new ArrayList<LatLng>();
-    List<Polyline> loneboi = new ArrayList<Polyline>();
-    List<Marker> markiboi = new ArrayList<Marker>();
-    List<Double> dist = new ArrayList<Double>();
 
-    public void pline() {
+
+    public static void pline() {
         for(Polyline line : loneboi)
         {
             line.remove();
@@ -162,6 +189,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .add((seq.get(i)), (seq.get(0)))
                 .width(5)
                 .color(Color.RED)));
+
     }
 
     public int loc;
@@ -207,6 +235,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+    }
+
+    public static void rmark() {
+        for(Marker marki : markiboi)
+        {
+            marki.remove();
+        }
+
+        markiboi.removeAll(markiboi);
+
+        for ( int j = 0; j <= i; j++)
+        {
+            markiboi.add(mMap.addMarker(new MarkerOptions()
+                    .position(seq.get(j))
+                    .draggable(true)
+                    .snippet(String.valueOf(j))));
+
+        }
     }
 
     @Override

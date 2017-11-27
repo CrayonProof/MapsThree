@@ -1,20 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v24/values-v24.xml",
+            "outputFile": "C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v24\\values-v24.xml",
             "map": [
                 {
-                    "source": "/home/matt/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/d072de1a9195074fbbf9e20c25da62a8/res/values-v24/values-v24.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7",
-                        "startColumns": "4,4,4,4,4,4",
-                        "startOffsets": "55,212,347,416,480,549",
-                        "endColumns": "156,134,68,63,68,69",
-                        "endOffsets": "207,342,411,475,544,614"
-                    }
-                },
-                {
-                    "source": "/home/matt/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/337d6c1c1f4793ed83dfff5aa272b535/res/values-v24/values-v24.xml",
+                    "source": "C:\\home\\matt\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\337d6c1c1f4793ed83dfff5aa272b535\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -28,6 +18,48 @@
                         "startOffsets": "619,685,746,812",
                         "endColumns": "65,60,65,66",
                         "endOffsets": "680,741,807,874"
+                    }
+                },
+                {
+                    "source": "C:\\home\\matt\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\d072de1a9195074fbbf9e20c25da62a8\\res\\values-v24\\values-v24.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,212,347,416,480,549",
+                        "endColumns": "156,134,68,63,68,69",
+                        "endOffsets": "207,342,411,475,544,614"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v24\\values-v24.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\ebf481d654ad73090015400fe8be9b36\\res\\values-v24\\values-v24.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,121,182,248",
+                        "endColumns": "65,60,65,66",
+                        "endOffsets": "116,177,243,310"
+                    },
+                    "to": {
+                        "startLines": "8,9,10,11",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "619,685,746,812",
+                        "endColumns": "65,60,65,66",
+                        "endOffsets": "680,741,807,874"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\a3c7b1e81595eb9ef3c4ec74a84aa5e6\\res\\values-v24\\values-v24.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,212,347,416,480,549",
+                        "endColumns": "156,134,68,63,68,69",
+                        "endOffsets": "207,342,411,475,544,614"
                     }
                 }
             ]

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D3D3D3"
@@ -17,18 +18,6 @@
         tools:context="com.example.matt.mapsthree.MapsActivity"
         tools:layout="@android:layout/simple_dropdown_item_1line" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtInput"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:hint="Write Something To Save"
-        android:gravity="top" />
-
     <Button
         android:id="@+id/btnSave"
         style="@style/Widget.AppCompat.Button.Colored"
@@ -36,9 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="12dp"
-        android:layout_marginEnd="13dp"
-        android:text="Submit" />
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="14dp"
+        android:text="Submit with Defaults" />
 
     <Button
         android:id="@+id/btnRead"
@@ -46,10 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnSave"
-        android:layout_alignStart="@+id/btnSave"
-        android:layout_marginBottom="12dp"
+        android:layout_alignEnd="@+id/btnSave"
         android:backgroundTint="#4177ea"
-        android:text="Readow" />
+        android:text="Parameters" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,5 +53,14 @@
         android:layout_alignParentBottom="true"
         android:scrollIndicators="bottom|right"
         android:editable="false" />
+
+    <Button
+        android:id="@+id/btnRef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/btnSave"
+        android:layout_marginStart="12dp"
+        android:text="Refresh" />
 
 </RelativeLayout>
