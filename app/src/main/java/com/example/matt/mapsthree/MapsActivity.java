@@ -63,8 +63,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_maps);
 
-        txtContent = (TextView) findViewById(R.id.txtContent);
-        txtInput = (EditText) findViewById(R.id.txtInput);
 
         btnRead = (Button) findViewById(R.id.btnRead);
         btnRead.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +99,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnRef.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pline();
-                rmark();
+                //pline();
+                //rmark();
             }
         });
     }

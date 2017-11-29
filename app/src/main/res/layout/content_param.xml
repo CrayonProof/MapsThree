@@ -23,7 +23,7 @@
             android:layout_marginTop="15dp"
             android:ems="10"
             android:hint="coverage"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="62dp" />
 
@@ -35,7 +35,7 @@
             android:layout_below="@+id/editText8"
             android:ems="10"
             android:hint="camera_range"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="16dp" />
 
@@ -47,7 +47,7 @@
             android:layout_below="@+id/editText11"
             android:ems="10"
             android:hint="max_cameras"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="108dp" />
 
@@ -59,7 +59,7 @@
             android:layout_centerHorizontal="true"
             android:ems="10"
             android:hint="max_flight_photos"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="200dp" />
 
@@ -71,7 +71,7 @@
             android:layout_below="@+id/editText13"
             android:ems="10"
             android:hint="takeoff_altitude"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="246dp" />
 
@@ -83,7 +83,7 @@
             android:layout_below="@+id/editText9"
             android:ems="10"
             android:hint="margin_of_safety"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="154dp" />
 
@@ -106,7 +106,7 @@
             android:layout_above="@+id/btnSave"
             android:layout_alignEnd="@+id/btnSave"
             android:backgroundTint="#4177ea"
-            android:text="Flight Area" />
+            android:text="cancel" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

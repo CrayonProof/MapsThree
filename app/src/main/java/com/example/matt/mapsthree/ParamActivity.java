@@ -49,7 +49,11 @@ public class ParamActivity extends AppCompatActivity {
         btnAct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View p) {
-                startActivity(new Intent(ParamActivity.this, MapsActivity.class));
+                //startActivity(new Intent(ParamActivity.this, MapsActivity.class));
+                Intent i = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
 
         });
