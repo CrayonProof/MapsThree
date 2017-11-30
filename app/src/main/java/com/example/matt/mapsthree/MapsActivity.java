@@ -1,6 +1,6 @@
 package com.example.matt.mapsthree;
 
-//import necessary packages
+//import packages
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -35,42 +35,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static GoogleMap mMap;
     public static int i = 0;
-    LatLng provo = new LatLng(40.26844786793794, -111.63785051554441);
+    static LatLng provo = new LatLng(40.26844786793794, -111.63785051554441);
     public static List<LatLng> seq = new ArrayList<LatLng>();
     public static List<Polyline> loneboi = new ArrayList<Polyline>();
     public static List<Marker> markiboi = new ArrayList<Marker>();
-    List<Double> dist = new ArrayList<Double>();
+    static List<Double> dist = new ArrayList<Double>();
+    public static int loc;
 
-    Button btnRead , btnSave, btnRef;
+    Button btnNxt, btnSave, btnRef;
     EditText txtInput;
     TextView txtContent;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        /*final Button button = (Button) findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast.makeText(MapsActivity.this, "*Click*",
-                        Toast.LENGTH_SHORT).show();            }
-        });
-        */
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_maps);
-
-
-        btnRead = (Button) findViewById(R.id.btnRead);
-        btnRead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                txtContent.setText(FileHelper.ReadFile(MapsActivity.this));
-            }
-        });
 
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -84,23 +71,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        btnRead.setOnClickListener(new View.OnClickListener() {
+        //"Finalize and Continue" button. Advances to the parameter selection activity
+        btnNxt = (Button) findViewById(R.id.btnNxt);
+        btnNxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MapsActivity.this, ParamActivity.class));
             }
         });
+    }
+/*
+    //retrieves saved data in case of activity refresh.
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
 
+        i = savedInstanceState.getInt("i");
+        if (i > 0) {
+            pline();
+            rmark();
+        }
+    }
+*/
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        //"i don't do anything" button. A testing feature to refresh maps activity.
         btnRef = (Button) findViewById(R.id.btnRef);
         btnRef.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //pline();
-                //rmark();
+                if (i > 0) {
+                    pline();
+                    rmark();
+                }
             }
         });
     }
@@ -114,6 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    //Allows Filehelper class to be called and passed marker LatLng (local data) from other classes.
     public static boolean saveFile()
     {
         if (FileHelper.saveToFile(seq, i)){
@@ -123,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-//retrives location when user drags marker to new location, toasts latlng to screen
+    //retrieves location when user drags marker to new location, toasts latlng to screen
     public void findLocation() {
         mMap.setOnMarkerDragListener(new OnMarkerDragListener() {
 
@@ -165,8 +171,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-
-
+    //Clears and redraws updated polylines that make up the polygon encompassing the flight area.
     public static void pline() {
         for(Polyline line : loneboi)
         {
@@ -174,8 +179,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         loneboi.removeAll(loneboi);
-
-        for ( int j = 0; j < i; j++)
+        //iterates through each pair of markers, adding a polyline to the polyline arrayList for each one.
+        for ( int j = 0; j < i-1; j++)
         {
             loneboi.add(mMap.addPolyline(new PolylineOptions()
                     .add((seq.get(j)), (seq.get(j+1)))
@@ -183,25 +188,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .color(Color.RED)));
 
         }
+        //Draws the last line, from the last vertice to the first one.
         loneboi.add(mMap.addPolyline(new PolylineOptions()
-                .add((seq.get(i)), (seq.get(0)))
+                .add((seq.get(i-1)), (seq.get(0)))
                 .width(5)
                 .color(Color.RED)));
 
     }
 
-    public int loc;
+    //Refresh all markers when activity is refreshed. Identical to pline method but for markers.
+    public static void rmark() {
+        for(Marker marki : markiboi)
+        {
+            marki.remove();
+        }
 
+        markiboi.removeAll(markiboi);
+
+        for ( int j = 0; j <= i-1; j++)
+        {
+            markiboi.add(mMap.addMarker(new MarkerOptions()
+                    .position(seq.get(j))
+                    .draggable(true)
+                    .snippet(String.valueOf(j))));
+
+        }
+    }
+
+    //Creates a new marker wherever user long presses the map.
     public void makeMarker() {
         mMap.setOnMapLongClickListener(new OnMapLongClickListener() {
 
             //@Override
             public void onMapLongClick (LatLng arg0){
                 // TODO Auto-generated method stub
-
+                //runs this code for everything after the first three points. Figures out where the new marker fits in to the polygon.
                 if (false)// i >= 3)
                 {
-                    i++;
                     loc = findInx(arg0);
 
                     // create new marker when user long clicks
@@ -212,13 +235,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Toast.makeText(MapsActivity.this, "New marker created",
                             Toast.LENGTH_SHORT).show();
                     seq.add(loc, arg0);
-                    findLocation();
-                    pline();
                 }
-                else if (true)// i < 3)
+                //runs this code for the first three markers created
+                else if (true)//(i < 3)
                 {
-                    i++;
-
                     // create new marker when user long clicks
                     markiboi.add(mMap.addMarker(new MarkerOptions()
                             .position(arg0)
@@ -227,30 +247,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Toast.makeText(MapsActivity.this, "New marker created",
                             Toast.LENGTH_SHORT).show();
                     seq.add(arg0);
-                    findLocation();
+
+                }
+
+                i++;
+                findLocation();
+                if (i > 1) {
                     pline();
                 }
 
             }
         });
-    }
-
-    public static void rmark() {
-        for(Marker marki : markiboi)
-        {
-            marki.remove();
-        }
-
-        markiboi.removeAll(markiboi);
-
-        for ( int j = 0; j <= i; j++)
-        {
-            markiboi.add(mMap.addMarker(new MarkerOptions()
-                    .position(seq.get(j))
-                    .draggable(true)
-                    .snippet(String.valueOf(j))));
-
-        }
     }
 
     @Override
@@ -260,15 +267,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Rock Canyon and move the camera
 
-        mMap.addMarker(new MarkerOptions().position(provo).title("marka").draggable(true).snippet("0"));
+        // mMap.addMarker(new MarkerOptions().position(provo).title("marka").draggable(true).snippet("0"));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(provo));
 
         findLocation();
         makeMarker();
-        seq.add(provo);
+        //seq.add(provo);
+
+        if (i > 0) {
+            pline();
+            rmark();
+        }
     }
 
+    //determines what index to inject new vertices at on the polygon. Returns int
     public int findInx (LatLng x)
     {
         List<Double> dists = new ArrayList<Double>();
@@ -277,9 +290,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (int j = 0; j < i; j++ )
         {
             //dists.add(findLineDist(ax, bx, ay, by))
-            //YAAAAAAAAAAAAAAAAAAAAAAAAYYY
+            //YAAAAAAAAAAAAAAAAAAAAAAAAHOOOOOO
         }
         return 0;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("i", i);
+        //outState.putList("loneboi", loneboi);
+        super.onSaveInstanceState(outState);
     }
 
 
