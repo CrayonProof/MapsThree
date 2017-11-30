@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Tan on 2/18/2016.
+ * Original class created by Tan on 2/18/2016.
+ * Modified by Sin later
+ * Cosine joke but I'm too lazy to make one up
  */
 public class FileHelper {
     final static String fileName = "data.txt";
@@ -50,37 +52,84 @@ public class FileHelper {
         return line;
     }
 
-    public static boolean saveToFile(List<LatLng> data, int length){
-        try {
+    public static boolean saveToFile(List<LatLng> data, int length, List<String> param)
+    {
+        List<String> vNames = new ArrayList<String>()
+        {{
+            add("camera_range: ");
+            add("coverage: ");
+            add("max_cameras: ");
+            add("margin_of_safety: ");
+            add("max_flight_photos: ");
+            add("takeoff_altitude: ");
+        }};
+        try
+        {
             new File(path  ).mkdirs();
             //File file = new File(path+ fileName);
 
             File file = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DCIM), "jol");
+                    Environment.DIRECTORY_DCIM), "pinto.yaml");
 
             if (!file.exists()) {
                 file.createNewFile();
             }
-            FileOutputStream bos = new FileOutputStream(file,false);
-            bos.write(("").getBytes());
 
             String darti;
-            for (int i = 0; i <= length; i++)
+            for (int i = 0; i <= length-1; i++)
             {
                 darti = Double.toString(data.get(i).latitude) + "," + Double.toString(data.get(i).longitude);
                 FileOutputStream fos = new FileOutputStream(file, true);
                 fos.write((darti + "\r\n").getBytes());
             }
+            for (int i = 0; i < 6; i++)
+            {
+                darti = vNames.get(i) + (param.get(i));
+                FileOutputStream fos = new FileOutputStream(file, true);
+                fos.write((darti + "\r\n").getBytes());
+            }
 
             return true;
-        }  catch(FileNotFoundException ex) {
+        }
+        catch(FileNotFoundException ex)
+        {
             Log.d(TAG, ex.getMessage());
-        }  catch(IOException ex) {
+        }
+        catch(IOException ex)
+        {
             Log.d(TAG, ex.getMessage());
         }
         return  false;
+    }
 
+    //clears the file...what else would a clearFile method do?
+    public static boolean clearFile()
+    {
+        try {
+            new File(path).mkdirs();
 
+            //File file = new File(path+ fileName);
+            File file = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DCIM), "pinto.yaml");
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileOutputStream bos = new FileOutputStream(file, false);
+            bos.write(("").getBytes());
+
+            return true;
+        }
+        catch(FileNotFoundException ex)
+        {
+            Log.d(TAG, ex.getMessage());
+        }
+        catch(IOException ex)
+        {
+            Log.d(TAG, ex.getMessage());
+        }
+        return  false;
     }
 
 }
