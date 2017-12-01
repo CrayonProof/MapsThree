@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu Nov 30 20:43:52 MST 2017
+#Thu Nov 30 20:49:23 MST 2017
 210.set=ANDROID_RESOURCE
 14.set=ANDROID_RESOURCE
 180.file=C\:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_\\res\\layout\\design_bottom_sheet_dialog.xml

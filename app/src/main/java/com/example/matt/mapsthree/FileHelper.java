@@ -77,7 +77,7 @@ public class FileHelper {
 
             String darti;
             FileOutputStream fos = new FileOutputStream(file, true);
-            fos.write(("[").getBytes());
+            fos.write(("polygon: [").getBytes());
             for (int i = 0; i <= length-2; i++)
             {
                 darti = Double.toString(data.get(i).latitude) + "," + Double.toString(data.get(i).longitude);
