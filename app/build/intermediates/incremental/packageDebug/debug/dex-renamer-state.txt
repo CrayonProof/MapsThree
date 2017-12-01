@@ -1,19 +1,4 @@
-#Mon Nov 27 13:38:16 MST 2017
-renamed.5=classes6.dex
-renamed.4=classes5.dex
-renamed.3=classes4.dex
-renamed.2=classes3.dex
-renamed.1=classes2.dex
+#Thu Nov 30 20:43:52 MST 2017
+base.0=C\:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\37
 renamed.0=classes.dex
-base.5=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/32
-base.4=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/30
-base.3=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/31
-base.2=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/33
-base.1=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/34
-base.0=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/35
-file.5=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/32/classes.dex
-file.4=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/30/classes.dex
-file.3=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/31/classes.dex
-file.2=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/33/classes.dex
-file.1=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/34/classes.dex
-file.0=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/35/classes.dex
+file.0=C\:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\37\\classes.dex

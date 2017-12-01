@@ -881,7 +881,7 @@ int id beginning 0x7f080023
 int id blocking 0x7f080024
 int id bottom 0x7f080025
 int id btnArea 0x7f080026
-int id btnRead 0x7f080027
+int id btnNxt 0x7f080027
 int id btnRef 0x7f080028
 int id btnSave 0x7f080029
 int id buttonPanel 0x7f08002a

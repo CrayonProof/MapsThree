@@ -41,6 +41,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static List<Marker> markiboi = new ArrayList<Marker>();
     static List<Double> dist = new ArrayList<Double>();
     public static int loc;
+    static List<String> def = new ArrayList<String>()
+    {{
+        add("0");
+        add("0");
+        add("0");
+        add("0");
+        add("0");
+        add("0");
+    }};
 
     Button btnNxt, btnSave, btnRef;
     EditText txtInput;
@@ -63,11 +72,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (FileHelper.saveToFile(seq, i)){
-                    Toast.makeText(MapsActivity.this,"Saved to file",Toast.LENGTH_SHORT).show();
+                if (FileHelper.clearFile())
+                {
+                    if (FileHelper.saveToFile(seq, i, def))
+                    {
+                        Toast.makeText(MapsActivity.this,"Saved to file",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(MapsActivity.this,"Error, File Not Saved!!!",Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-                    Toast.makeText(MapsActivity.this,"Error save file!!!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapsActivity.this,"Error, File Not Saved!!!",Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -120,9 +136,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * installed Google Play services and returned to the app.
      */
     //Allows Filehelper class to be called and passed marker LatLng (local data) from other classes.
-    public static boolean saveFile()
+    public static boolean saveFile(List<String> arg0)
     {
-        if (FileHelper.saveToFile(seq, i)){
+        if (FileHelper.saveToFile(seq, i, arg0)){
             return true;
         }else{
             return false;

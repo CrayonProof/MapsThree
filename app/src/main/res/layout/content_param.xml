@@ -94,8 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="14dp"
-            android:layout_marginEnd="13dp"
+            android:layout_marginBottom="19dp"
+            android:layout_marginEnd="17dp"
             android:text="Submit" />
 
         <Button
@@ -106,7 +106,7 @@
             android:layout_above="@+id/btnSave"
             android:layout_alignEnd="@+id/btnSave"
             android:backgroundTint="#4177ea"
-            android:text="cancel" />
+            android:text="Back to Map" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -76,17 +76,19 @@ public class FileHelper {
             }
 
             String darti;
-            for (int i = 0; i <= length-1; i++)
+            FileOutputStream fos = new FileOutputStream(file, true);
+            fos.write(("[").getBytes());
+            for (int i = 0; i <= length-2; i++)
             {
                 darti = Double.toString(data.get(i).latitude) + "," + Double.toString(data.get(i).longitude);
-                FileOutputStream fos = new FileOutputStream(file, true);
-                fos.write((darti + "\r\n").getBytes());
+                fos.write(("[" + darti + "],").getBytes());
             }
+            darti = Double.toString(data.get(length-1).latitude) + "," + Double.toString(data.get(length-1).longitude);
+            fos.write(("[" + darti + "]]").getBytes());
             for (int i = 0; i < 6; i++)
             {
                 darti = vNames.get(i) + (param.get(i));
-                FileOutputStream fos = new FileOutputStream(file, true);
-                fos.write((darti + "\r\n").getBytes());
+                fos.write(("\r\n" + darti).getBytes());
             }
 
             return true;
