@@ -20,21 +20,23 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="31dp"
             android:ems="10"
-            android:hint="coverage"
+            android:hint="0"
             android:inputType="numberDecimal"
+            android:textAlignment="viewStart"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="62dp" />
+
 
         <EditText
             android:id="@+id/editText9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/editText8"
-            android:layout_below="@+id/editText8"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_below="@+id/textView2"
             android:ems="10"
-            android:hint="camera_range"
+            android:hint="0"
             android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="16dp" />
@@ -43,10 +45,10 @@
             android:id="@+id/editText10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/editText11"
-            android:layout_below="@+id/editText11"
+            android:layout_below="@+id/textView6"
+            android:layout_centerHorizontal="true"
             android:ems="10"
-            android:hint="max_cameras"
+            android:hint="0"
             android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="108dp" />
@@ -55,10 +57,10 @@
             android:id="@+id/editText11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editText12"
+            android:layout_below="@+id/textView5"
             android:layout_centerHorizontal="true"
             android:ems="10"
-            android:hint="max_flight_photos"
+            android:hint="0"
             android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="200dp" />
@@ -67,10 +69,10 @@
             android:id="@+id/editText12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/editText13"
-            android:layout_below="@+id/editText13"
+            android:layout_alignStart="@+id/textView4"
+            android:layout_below="@+id/textView4"
             android:ems="10"
-            android:hint="takeoff_altitude"
+            android:hint="0"
             android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="246dp" />
@@ -79,10 +81,11 @@
             android:id="@+id/editText13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/editText9"
-            android:layout_below="@+id/editText9"
+            android:layout_alignTop="@+id/textView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="19dp"
             android:ems="10"
-            android:hint="margin_of_safety"
+            android:hint="0"
             android:inputType="numberDecimal"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="154dp" />
@@ -107,6 +110,62 @@
             android:layout_alignEnd="@+id/btnSave"
             android:backgroundTint="#4177ea"
             android:text="Back to Map" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/editText8"
+            android:layout_marginTop="11dp"
+            android:text="Coverage"
+            android:textAppearance="@android:style/TextAppearance.Material.Small"
+            android:background="#e2e2e2"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editText8"
+            android:layout_below="@+id/editText8"
+            android:text="camera_range"
+            android:background="#e2e2e2"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editText13"
+            android:layout_below="@+id/editText9"
+            android:text="margin_of_safety"
+            android:background="#e2e2e2"/>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editText13"
+            android:layout_below="@+id/editText13"
+            android:text="takeoff_altitude"
+            android:background="#e2e2e2"/>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editText12"
+            android:layout_below="@+id/editText12"
+            android:text="max_flight_photos"
+            android:background="#e2e2e2"/>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editText11"
+            android:layout_below="@+id/editText11"
+            android:text="max_cameras"
+            android:background="#e2e2e2"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

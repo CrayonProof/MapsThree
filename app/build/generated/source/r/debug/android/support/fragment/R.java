@@ -87,8 +87,8 @@ public final class R {
         public static final int right_side = 0x7f080083;
         public static final int text = 0x7f0800b0;
         public static final int text2 = 0x7f0800b1;
-        public static final int time = 0x7f0800b7;
-        public static final int title = 0x7f0800b8;
+        public static final int time = 0x7f0800bd;
+        public static final int title = 0x7f0800be;
     }
     public static final class integer {
         public static final int status_bar_notification_info_maxnum = 0x7f09000a;
