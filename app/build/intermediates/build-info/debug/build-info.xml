@@ -1,35 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
-    abi="arm64-v8a,armeabi-v7a,armeabi"
-    api-level="26"
-    build-mode="COLD"
-    density="560dpi"
+    abi="armeabi-v7a,armeabi"
+    api-level="22"
+    build-mode="FULL"
+    density="xhdpi"
     format="10"
     plugin-version="3.0.0"
-    timestamp="1511815054013"
+    timestamp="1512510655833"
     token="-5156677861456824337"
-    verifier="COLD_SWAP_REQUESTED" >
+    verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="7421" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="2053" />
     <task
         name="verifier"
-        duration="0" />
+        duration="1563" />
 
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_8.apk"
+        type="SPLIT" />
     <artifact
         location="/home/matt/AndroidStudioProjects/MapsThree/app/build/outputs/apk/debug/app-debug.apk"
         type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
-        timestamp="1511812903782"
+        timestamp="1512510655833"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
@@ -41,22 +74,22 @@
             location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
             type="SPLIT" />
         <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
-            type="SPLIT" />
-        <artifact
             location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
             type="SPLIT" />
         <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
             type="SPLIT" />
         <artifact
             location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
             type="SPLIT" />
         <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
+            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
             type="SPLIT" />
         <artifact
             location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
+            type="SPLIT" />
+        <artifact
+            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
             type="SPLIT" />
         <artifact
             location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
@@ -64,44 +97,6 @@
         <artifact
             location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_8.apk"
             type="SPLIT" />
-        <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/outputs/apk/debug/app-debug.apk"
-            type="SPLIT_MAIN" />
-    </build>
-    <build
-        build-mode="COLD"
-        ir-eligibility="R_CLASS_CHANGE"
-        timestamp="1511813978756"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
-            type="SPLIT" />
-        <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
-            type="SPLIT" />
-        <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
-            type="SPLIT" />
-        <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
-            type="SPLIT" />
-        <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
-            type="SPLIT" />
-        <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
-            type="SPLIT" />
-        <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
-            type="SPLIT" />
-        <artifact
-            location="/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
-            type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        timestamp="1511815054013"
-        verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="/home/matt/AndroidStudioProjects/MapsThree/app/build/outputs/apk/debug/app-debug.apk"
             type="SPLIT_MAIN" />

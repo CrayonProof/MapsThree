@@ -49,4 +49,11 @@
         android:textAllCaps="false"
         android:visibility="invisible" />
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/btnSave" />
+
 </RelativeLayout>

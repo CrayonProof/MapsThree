@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         add("0");
         add("0");
     }};
+    static int pointMode = 0; //0 = area, 1 = low priority, 2 = med priority, 3 = high priority
 
     Button btnNxt, btnSave, btnRef;
     EditText txtInput;
@@ -95,6 +98,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(new Intent(MapsActivity.this, ParamActivity.class));
             }
         });
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.priorityType, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
     }
 /*
     //retrieves saved data in case of activity refresh.
@@ -317,6 +329,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //outState.putList("loneboi", loneboi);
         super.onSaveInstanceState(outState);
     }
+
+    
 
 
 
