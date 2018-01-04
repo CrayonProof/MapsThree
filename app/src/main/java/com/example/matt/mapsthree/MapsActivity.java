@@ -41,6 +41,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static List<LatLng> seq = new ArrayList<LatLng>();
     public static List<Polyline> loneboi = new ArrayList<Polyline>();
     public static List<Marker> markiboi = new ArrayList<Marker>();
+    public static List<Marker> lowPrio = new ArrayList<Marker>();
+    public static List<Marker> medPrio = new ArrayList<Marker>();
+    public static List<Marker> hiPrio = new ArrayList<Marker>();
     static List<Double> dist = new ArrayList<Double>();
     public static int loc;
     static List<String> def = new ArrayList<String>()
@@ -53,10 +56,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         add("0");
     }};
     static int pointMode = 0; //0 = area, 1 = low priority, 2 = med priority, 3 = high priority
-
+    private Spinner spini;
     Button btnNxt, btnSave, btnRef;
     EditText txtInput;
     TextView txtContent;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -265,7 +270,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     seq.add(loc, arg0);
                 }
                 //runs this code for the first three markers created
-                else if (true)//(i < 3)
+                else if (pointMode == 0) //(i < 3)
                 {
                     // create new marker when user long clicks
                     markiboi.add(mMap.addMarker(new MarkerOptions()
@@ -276,6 +281,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Toast.LENGTH_SHORT).show();
                     seq.add(arg0);
 
+                }
+                else if (pointMode == 1)
+                {
+                    //low priority
+                    lowPrio.add(mMap.addMarker(new MarkerOptions()
+                            .position(arg0)
+                            .draggable(true)
+                            .icon(justmakeitblueidontcare)
+                            .snippet(String.valueOf(iLow))));
+                    Toast.makeText(MapsActivity.this, "New marker created",
+                            Toast.LENGTH_SHORT).show();
+                    iLowLoc.add(arg0);
+                }
+                else if (pointMode == 2)
+                {
+                    //med priority
+                }
+                else if (pointMode == 3)
+                {
+                    //high priority
                 }
 
                 i++;
