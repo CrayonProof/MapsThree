@@ -12,7 +12,7 @@ public class PointSet {
     int priorityLevel;
     ArrayList<LatLng> points = new ArrayList<LatLng>();
 
-    public void pointSet(int arg0)
+    public PointSet(int arg0)
     {
         priorityLevel = arg0;
     }
@@ -51,26 +51,40 @@ public class PointSet {
 
     public void updatePoint(int index, LatLng location)
     {
-
+        points.set(index, location);
     }
 
     public int getPriorityLevel()
     {
-
+        return priorityLevel;
     }
 
     public double[] readX()
     {
-
+        double[] x = new double[points.size()];
+        for (int i = 0; i < points.size(); i++)
+        {
+            x[i] = (points.get(i)).longitude;
+        }
+        return x;
     }
 
     public double[] readY()
     {
-
+        double[] y = new double[points.size()];
+        for (int i = 0; i < points.size(); i++)
+        {
+            y[i] = (points.get(i)).latitude;
+        }
+        return y;
     }
 
-    public LatLng[] readPoints()
+    public ArrayList readPoints()
     {
-
+        return points;
+    }
+    public int count()
+    {
+        return points.size();
     }
 }

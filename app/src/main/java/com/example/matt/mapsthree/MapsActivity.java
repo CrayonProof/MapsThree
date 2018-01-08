@@ -35,6 +35,11 @@ import android.widget.Toast;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    PointSet general = new PointSet(1);
+    PointSet low = new PointSet(2);
+    PointSet med = new PointSet(3);
+    PointSet high = new PointSet(4);
+
     private static GoogleMap mMap;
     public static int i = 0;
     static LatLng provo = new LatLng(40.26844786793794, -111.63785051554441);
@@ -272,6 +277,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //runs this code for the first three markers created
                 else if (pointMode == 0) //(i < 3)
                 {
+                    general.addPoint(arg0, findPointSequencePosition(arg0));
+
+
+
                     // create new marker when user long clicks
                     markiboi.add(mMap.addMarker(new MarkerOptions()
                             .position(arg0)
@@ -285,14 +294,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 else if (pointMode == 1)
                 {
                     //low priority
-                    lowPrio.add(mMap.addMarker(new MarkerOptions()
-                            .position(arg0)
-                            .draggable(true)
-                            .icon(justmakeitblueidontcare)
-                            .snippet(String.valueOf(iLow))));
-                    Toast.makeText(MapsActivity.this, "New marker created",
-                            Toast.LENGTH_SHORT).show();
-                    iLowLoc.add(arg0);
                 }
                 else if (pointMode == 2)
                 {
@@ -353,6 +354,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         outState.putInt("i", i);
         //outState.putList("loneboi", loneboi);
         super.onSaveInstanceState(outState);
+    }
+
+    public int findPointSequencePosition(LatLng location)
+    {
+        return general.count();
     }
 
     
