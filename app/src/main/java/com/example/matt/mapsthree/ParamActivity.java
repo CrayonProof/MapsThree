@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import android.widget.EditText;
+import com.google.firebase.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,6 @@ public class ParamActivity extends AppCompatActivity {
             }
         });
         */
-        //ioio
     }
 
     @Override
@@ -97,7 +97,13 @@ public class ParamActivity extends AppCompatActivity {
                 if (FileHelper.clearFile())
                 {
                     if (MapsActivity.saveFile(vContent)){
-                        Toast.makeText(ParamActivity.this,"Saved to file",Toast.LENGTH_SHORT).show();
+                        if (FileHelper.uploadFile()) {
+                            Toast.makeText(ParamActivity.this,"File saved and uploaded",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(ParamActivity.this,"Saved to LOCAL file only",Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                     else
                     {

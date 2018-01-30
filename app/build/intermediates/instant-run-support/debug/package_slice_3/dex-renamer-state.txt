@@ -1,4 +1,4 @@
-#Tue Dec 05 14:52:49 MST 2017
-base.0=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/41
+#Tue Jan 30 14:45:19 MST 2018
+base.0=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/60
 renamed.0=classes.dex
-file.0=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/41/classes.dex
+file.0=/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/transforms/dexMerger/debug/60/classes.dex

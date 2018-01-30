@@ -89,7 +89,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 {
                     if (FileHelper.saveToFile(seq, i, def))
                     {
-                        Toast.makeText(MapsActivity.this,"Saved to file",Toast.LENGTH_SHORT).show();
+                        if (FileHelper.uploadFile()) {
+                            Toast.makeText(MapsActivity.this,"Saved and uploaded",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(MapsActivity.this,"Saved to LOCAL file only",Toast.LENGTH_SHORT).show();
+                        }
+
                     }else{
                         Toast.makeText(MapsActivity.this,"Error, File Not Saved!!!",Toast.LENGTH_SHORT).show();
                     }
@@ -343,8 +349,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (int j = 0; j < i; j++ )
         {
-            //dists.add(findLineDist(ax, bx, ay, by))
-            //YAAAAAAAAAAAAAAAAAAAAAAAAHOOOOOO
+            //dists.add(findLineDist(ax, bx, ay, by)
         }
         return 0;
     }
@@ -358,10 +363,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public int findPointSequencePosition(LatLng location)
     {
+
         return general.count();
     }
 
-    
+    public void fileUpload() {
+        Toast.makeText(MapsActivity.this,"Uploaded",Toast.LENGTH_SHORT).show();
+    }
+
+    public void fileNotUpload() {
+        Toast.makeText(MapsActivity.this,"NOT Uploaded",Toast.LENGTH_SHORT).show();
+    }
 
 
 

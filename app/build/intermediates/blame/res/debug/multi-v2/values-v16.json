@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v16\\values-v16.xml",
             "map": [
                 {
-                    "source": "/home/matt/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/c2ac5b53dbde7d5efebb1d1615770f00/res/values-v16/values-v16.xml",
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\home\\matt\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\c2ac5b53dbde7d5efebb1d1615770f00\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -14,7 +14,75 @@
                     }
                 },
                 {
-                    "source": "/home/matt/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/d072de1a9195074fbbf9e20c25da62a8/res/values-v16/values-v16.xml",
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\home\\matt\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\d072de1a9195074fbbf9e20c25da62a8\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "/home/matt/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/e7ff9905923045c3e4430f80b263cb64/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "/home/matt/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/d24cc1fe367c3066341041da9a9c4bcc/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v16\\values-v16.xml",
+            "map": [
+                {
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\430987086dcc7a91ced7460ca59261a0\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                },
+                {
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\a3c7b1e81595eb9ef3c4ec74a84aa5e6\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -38,25 +106,6 @@
             "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v16\\values-v16.xml",
             "map": [
                 {
-                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\a3c7b1e81595eb9ef3c4ec74a84aa5e6\\res\\values-v16\\values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endLines": "5",
-                        "endColumns": "12",
-                        "endOffsets": "223"
-                    },
-                    "to": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "121",
-                        "endLines": "6",
-                        "endColumns": "12",
-                        "endOffsets": "289"
-                    }
-                },
-                {
                     "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\430987086dcc7a91ced7460ca59261a0\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
@@ -65,24 +114,9 @@
                         "endColumns": "65",
                         "endOffsets": "116"
                     }
-                }
-            ]
-        },
-        {
-            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v16\\values-v16.xml",
-            "map": [
-                {
-                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\home\\matt\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\c2ac5b53dbde7d5efebb1d1615770f00\\res\\values-v16\\values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
-                    }
                 },
                 {
-                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\home\\matt\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\d072de1a9195074fbbf9e20c25da62a8\\res\\values-v16\\values-v16.xml",
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\a3c7b1e81595eb9ef3c4ec74a84aa5e6\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -132,40 +166,6 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
-                    }
-                }
-            ]
-        },
-        {
-            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v16\\values-v16.xml",
-            "map": [
-                {
-                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\a3c7b1e81595eb9ef3c4ec74a84aa5e6\\res\\values-v16\\values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endLines": "5",
-                        "endColumns": "12",
-                        "endOffsets": "223"
-                    },
-                    "to": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "121",
-                        "endLines": "6",
-                        "endColumns": "12",
-                        "endOffsets": "289"
-                    }
-                },
-                {
-                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\430987086dcc7a91ced7460ca59261a0\\res\\values-v16\\values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
                     }
                 }
             ]

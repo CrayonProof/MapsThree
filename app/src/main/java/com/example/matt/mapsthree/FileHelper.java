@@ -1,8 +1,11 @@
 package com.example.matt.mapsthree;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +15,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +33,7 @@ public class FileHelper {
     final static String fileName = "data.txt";
     final static String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/instinctcoder/readwrite/" ;
     final static String TAG = FileHelper.class.getName();
+    static boolean upload;
 
     public static  String ReadFile( Context context){
         String line = null;
@@ -103,6 +113,36 @@ public class FileHelper {
         }
         return  false;
     }
+
+    public static boolean uploadFile() {
+
+
+
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        Uri file = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM), "pinto.yaml"));
+        StorageReference riversRef = mStorageRef.child("DCIM");
+
+        riversRef.putFile(file)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        upload = true;
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        upload = false;
+                    }
+                });
+        return upload;
+    }
+
+
 
     //clears the file...what else would a clearFile method do?
     public static boolean clearFile()
