@@ -3,6 +3,7 @@ package com.example.matt.mapsthree;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -23,6 +24,10 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.provider.Settings.Secure;
+
+import static android.provider.Settings.Secure.ANDROID_ID;
 
 /**
  * Original class created by Tan on 2/18/2016.
@@ -122,9 +127,9 @@ public class FileHelper {
 
         Uri file = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DCIM), "pinto.yaml"));
-        StorageReference riversRef = mStorageRef.child("DCIM");
+        StorageReference pintoRef = mStorageRef.child("pinto.yaml");
 
-        riversRef.putFile(file)
+        pintoRef.putFile(file)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

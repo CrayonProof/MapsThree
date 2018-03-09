@@ -59,7 +59,7 @@ public class PointSet {
         return priorityLevel;
     }
 
-    public double[] readX()
+    public double[] getX()
     {
         double[] x = new double[points.size()];
         for (int i = 0; i < points.size(); i++)
@@ -69,7 +69,7 @@ public class PointSet {
         return x;
     }
 
-    public double[] readY()
+    public double[] getY()
     {
         double[] y = new double[points.size()];
         for (int i = 0; i < points.size(); i++)
@@ -79,12 +79,26 @@ public class PointSet {
         return y;
     }
 
-    public ArrayList readPoints()
+    public ArrayList getPoints()
     {
         return points;
     }
     public int count()
     {
         return points.size();
+    }
+    public ArrayList<LatLng> getMidpoints()
+    {
+        ArrayList<LatLng> midPoints = new ArrayList<LatLng>();
+        for (int i = 0; i < points.size(); i++)
+        {
+            midPoints.add(new LatLng( ((points.get(i).latitude) - (points.get(i + 1).latitude))/2,
+                    ((points.get(i).longitude) - (points.get(i + 1).longitude))/2));
+        }
+        return midPoints;
+    }
+    public LatLng getMidPoint(int i)
+    {
+        return (this.getMidpoints()).get(i);
     }
 }
