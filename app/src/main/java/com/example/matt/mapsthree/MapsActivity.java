@@ -1,22 +1,32 @@
 package com.example.matt.mapsthree;
 
 //import packages
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
+
+import android.view.MotionEvent;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 import com.google.android.gms.maps.model.Marker;
 import android.graphics.Color;
+
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +34,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
+import android.os.Vibrator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +50,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     PointSet low = new PointSet(2);
     PointSet med = new PointSet(3);
     PointSet high = new PointSet(4);
+    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+    FrameLayout fram_map = (FrameLayout) findViewById(R.id.fram_map);
+    Button btn_draw_State = (Button) findViewById(R.id.btn_draw_State);
+    Boolean Is_MAP_Moveable = false; // to detect map is movable
 
     private static GoogleMap mMap;
     public static int i = 0;
@@ -49,6 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static List<Marker> lowPrio = new ArrayList<Marker>();
     public static List<Marker> medPrio = new ArrayList<Marker>();
     public static List<Marker> hiPrio = new ArrayList<Marker>();
+    ArrayList<LatLng> val = new ArrayList<LatLng>();
     static List<Double> dist = new ArrayList<Double>();
     public static int loc;
     static List<String> def = new ArrayList<String>()
@@ -115,6 +131,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        //Turn on and off drawing
+        btn_draw_State.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Is_MAP_Moveable = !Is_MAP_Moveable;
+            }
+        });
+
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -123,36 +147,69 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-    }
-/*
-    //retrieves saved data in case of activity refresh.
-    protected void onRestoreInstanceState(Bundle savedInstanceState)
-    {
-        super.onRestoreInstanceState(savedInstanceState);
 
-        i = savedInstanceState.getInt("i");
-        if (i > 0) {
-            pline();
-            rmark();
+        fram_map.setOnTouchListener(new View.OnTouchListener() {     @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            float x = event.getX();
+            float y = event.getY();
+
+            int x_co = Math.round(x);
+            int y_co = Math.round(y);
+
+            Projection projection = mMap.getProjection();
+            Point x_y_points = new Point(x_co, y_co);
+
+            LatLng latLng = mMap.getProjection().fromScreenLocation(x_y_points);
+            //latitude = latLng.latitude;
+
+            //longitude = latLng.longitude;
+
+
+
+            int eventaction = event.getAction();
+            switch (eventaction) {
+                case MotionEvent.ACTION_DOWN:
+                    // finger touches the screen
+                    val.add(new LatLng(latLng.latitude, latLng.longitude));
+
+                case MotionEvent.ACTION_MOVE:
+                    // finger moves on the screen
+                    val.add(new LatLng(latLng.latitude, latLng.longitude));
+
+                case MotionEvent.ACTION_UP:
+                    // finger leaves the screen
+                    Draw_Map();
+                    break;
+            }
+
+            return Is_MAP_Moveable;
+
         }
+        });
     }
-*/
+
+    public void Draw_Map() {
+        PolygonOptions rectOptions = new PolygonOptions();
+        rectOptions.addAll(val);
+        rectOptions.strokeColor(Color.BLUE);
+        rectOptions.strokeWidth(7);
+        rectOptions.fillColor(Color.CYAN);
+        Polygon polygon = mMap.addPolygon(rectOptions);
+    }
+
     @Override
     protected void onStart()
     {
         super.onStart();
         //"i don't do anything" button. A testing feature to refresh maps activity.
-        btnRef = (Button) findViewById(R.id.btnRef);
-        btnRef.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (i > 0) {
-                    pline();
-                    rmark();
-                }
-            }
-        });
+
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Manipulates the map once available.
@@ -173,152 +230,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    //retrieves location when user drags marker to new location, toasts latlng to screen
-    public void findLocation() {
-        mMap.setOnMarkerDragListener(new OnMarkerDragListener() {
-
-            @Override
-            public void onMarkerDragStart(Marker marker) {
-                // TODO Auto-generated method stub
-                // Here your code
-                Toast.makeText(MapsActivity.this, "Dragging",
-                        Toast.LENGTH_SHORT).show();
-                String s = marker.getSnippet();
-                seq.set(Integer.parseInt(s), marker.getPosition());
-                pline();
-            }
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-                // TODO Auto-generated method stub
-                LatLng position = marker.getPosition(); //
-                Toast.makeText(
-                        MapsActivity.this,
-                        "Lat " + position.latitude + " "
-                                + "Long " + position.longitude,
-                        Toast.LENGTH_LONG).show();
-                String s = marker.getSnippet();
-                seq.set(Integer.parseInt(s), position);
-                pline();
-            }
-
-            @Override
-            public void onMarkerDrag(Marker marker) {
-                // TODO Auto-generated method stub
-                // Toast.makeText(MainActivity.this, "Dragging",
-                // Toast.LENGTH_SHORT).show();
-                System.out.println("Dragging");
-                String s = marker.getSnippet();
-                seq.set(Integer.parseInt(s), marker.getPosition());
-                pline();
-            }
-        });
-    }
-
-    //Clears and redraws updated polylines that make up the polygon encompassing the flight area.
-    public static void pline() {
-        for(Polyline line : loneboi)
-        {
-            line.remove();
-        }
-
-        loneboi.removeAll(loneboi);
-        //iterates through each pair of markers, adding a polyline to the polyline arrayList for each one.
-        for ( int j = 0; j < i-1; j++)
-        {
-            loneboi.add(mMap.addPolyline(new PolylineOptions()
-                    .add((seq.get(j)), (seq.get(j+1)))
-                    .width(5)
-                    .color(Color.RED)));
-
-        }
-        //Draws the last line, from the last vertice to the first one.
-        loneboi.add(mMap.addPolyline(new PolylineOptions()
-                .add((seq.get(i-1)), (seq.get(0)))
-                .width(5)
-                .color(Color.RED)));
-
-    }
-
-    //Refresh all markers when activity is refreshed. Identical to pline method but for markers.
-    public static void rmark() {
-        for(Marker marki : markiboi)
-        {
-            marki.remove();
-        }
-
-        markiboi.removeAll(markiboi);
-
-        for ( int j = 0; j <= i-1; j++)
-        {
-            markiboi.add(mMap.addMarker(new MarkerOptions()
-                    .position(seq.get(j))
-                    .draggable(true)
-                    .snippet(String.valueOf(j))));
-
-        }
-    }
-
-    //Creates a new marker wherever user long presses the map.
-    public void makeMarker() {
-        mMap.setOnMapLongClickListener(new OnMapLongClickListener() {
-
-            //@Override
-            public void onMapLongClick (LatLng arg0){
-                // TODO Auto-generated method stub
-                //runs this code for everything after the first three points. Figures out where the new marker fits in to the polygon.
-                if (false)// i >= 3)
-                {
-                    loc = findInx(arg0);
-
-                    // create new marker when user long clicks
-                    markiboi.add(loc, (mMap.addMarker(new MarkerOptions()
-                            .position(arg0)
-                            .draggable(true)
-                            .snippet(String.valueOf(i)))));
-                    Toast.makeText(MapsActivity.this, "New marker created",
-                            Toast.LENGTH_SHORT).show();
-                    seq.add(loc, arg0);
-                }
-                //runs this code for the first three markers created
-                else if (pointMode == 0) //(i < 3)
-                {
-                    general.addPoint(arg0, findPointSequencePosition(arg0));
-
-
-
-                    // create new marker when user long clicks
-                    markiboi.add(mMap.addMarker(new MarkerOptions()
-                            .position(arg0)
-                            .draggable(true)
-                            .snippet(String.valueOf(i))));
-                    Toast.makeText(MapsActivity.this, "New marker created",
-                            Toast.LENGTH_SHORT).show();
-                    seq.add(arg0);
-
-                }
-                else if (pointMode == 1)
-                {
-                    //low priority
-                }
-                else if (pointMode == 2)
-                {
-                    //med priority
-                }
-                else if (pointMode == 3)
-                {
-                    //high priority
-                }
-
-                i++;
-                findLocation();
-                if (i > 1) {
-                    pline();
-                }
-
-            }
-        });
-    }
+    public void refresh(){}
 
     @Override
     public void onMapReady(GoogleMap googleMap)
@@ -330,28 +242,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // mMap.addMarker(new MarkerOptions().position(provo).title("marka").draggable(true).snippet("0"));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(provo));
-
-        findLocation();
-        makeMarker();
-        //seq.add(provo);
-
-        if (i > 0) {
-            pline();
-            rmark();
-        }
-    }
-
-    //determines what index to inject new vertices at on the polygon. Returns int
-    public int findInx (LatLng x)
-    {
-        List<Double> dists = new ArrayList<Double>();
-        List<Integer> inxs = new ArrayList<Integer>();
-
-        for (int j = 0; j < i; j++ )
-        {
-            //dists.add(findLineDist(ax, bx, ay, by)
-        }
-        return 0;
     }
 
     @Override
@@ -359,12 +249,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         outState.putInt("i", i);
         //outState.putList("loneboi", loneboi);
         super.onSaveInstanceState(outState);
-    }
-
-    public int findPointSequencePosition(LatLng location)
-    {
-
-        return general.count();
     }
 
     public void fileUpload() {

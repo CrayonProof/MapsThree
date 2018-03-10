@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "386098318558",
+    "firebase_url": "https://mapsthree-1d09b.firebaseio.com",
+    "project_id": "mapsthree-1d09b",
+    "storage_bucket": "mapsthree-1d09b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386098318558:android:44b9fd9d8b3c470f",
+        "android_client_info": {
+          "package_name": "com.example.matt.mapsthree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386098318558-jg4j8s0jgb5g3af1apgl0ri9fhfvg6se.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.matt.mapsthree",
+            "certificate_hash": "b3c8501a66152daee5663060fcea312391d61739"
+          }
+        },
+        {
+          "client_id": "386098318558-ikhl1h80s9ijm3c95lqd4rl893e5bbmh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.matt.mapsthree",
+            "certificate_hash": "f6e77871ffb5fc19360da3d3d6a976c8db3badbe"
+          }
+        },
+        {
+          "client_id": "386098318558-ps7qbtrf101koba03vj04212gni9cl80.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwmzv-jS6SmaWn0tmq2Yp0PJfqstCSi0U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386098318558-ps7qbtrf101koba03vj04212gni9cl80.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
