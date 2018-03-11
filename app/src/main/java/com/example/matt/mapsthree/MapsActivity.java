@@ -3,8 +3,9 @@ package com.example.matt.mapsthree;
 //import packages
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
-import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -14,9 +15,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 
+import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -25,9 +25,8 @@ import android.graphics.Color;
 
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
+//import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import java.util.ArrayList;
 import java.util.List;
 import android.view.View;
@@ -36,13 +35,11 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.os.Vibrator;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.Manifest;
+
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -50,10 +47,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     PointSet low = new PointSet(2);
     PointSet med = new PointSet(3);
     PointSet high = new PointSet(4);
-    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-    FrameLayout fram_map = (FrameLayout) findViewById(R.id.fram_map);
-    Button btn_draw_State = (Button) findViewById(R.id.btn_draw_State);
-    Boolean Is_MAP_Moveable = false; // to detect map is movable
+
+    Boolean Is_MAP_Moveable = false;
+
 
     private static GoogleMap mMap;
     public static int i = 0;
@@ -94,8 +90,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        FrameLayout fram_map = (FrameLayout) findViewById(R.id.fram_map);
+        Button btn_draw_State = (Button) findViewById(R.id.btn_draw_State);
+         // to detect map is movable
+
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_maps);
+
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        // Request write storage permissions
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        101);
+        } else {
+            // Permission has already been granted
+        }
 
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +120,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 if (FileHelper.clearFile())
                 {
-                    if (FileHelper.saveToFile(seq, i, def))
+                    if (FileHelper.saveToFile(seq, seq.size(), def))
                     {
                         if (FileHelper.uploadFile()) {
                             Toast.makeText(MapsActivity.this,"Saved and uploaded",Toast.LENGTH_SHORT).show();
@@ -148,41 +165,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        fram_map.setOnTouchListener(new View.OnTouchListener() {     @Override
+        fram_map.setOnTouchListener(new View.OnTouchListener() {
+            @Override
         public boolean onTouch(View v, MotionEvent event) {
-            float x = event.getX();
-            float y = event.getY();
+                if(Is_MAP_Moveable)
+                {
+                float x = event.getX();
+                float y = event.getY();
 
-            int x_co = Math.round(x);
-            int y_co = Math.round(y);
+                int x_co = Math.round(x);
+                int y_co = Math.round(y);
 
-            Projection projection = mMap.getProjection();
-            Point x_y_points = new Point(x_co, y_co);
+                Projection projection = mMap.getProjection();
+                Point x_y_points = new Point(x_co, y_co);
 
-            LatLng latLng = mMap.getProjection().fromScreenLocation(x_y_points);
-            //latitude = latLng.latitude;
+                LatLng latLng = mMap.getProjection().fromScreenLocation(x_y_points);
+                double latitude = latLng.latitude;
 
-            //longitude = latLng.longitude;
+                double longitude = latLng.longitude;
 
 
+                int eventaction = event.getAction();
+                switch (eventaction) {
+                    case MotionEvent.ACTION_DOWN:
+                        // finger touches the screen
+                        val.add(new LatLng(latitude, longitude));
 
-            int eventaction = event.getAction();
-            switch (eventaction) {
-                case MotionEvent.ACTION_DOWN:
-                    // finger touches the screen
-                    val.add(new LatLng(latLng.latitude, latLng.longitude));
+                    case MotionEvent.ACTION_MOVE:
+                        // finger moves on the screen
+                        val.add(new LatLng(latitude, longitude));
 
-                case MotionEvent.ACTION_MOVE:
-                    // finger moves on the screen
-                    val.add(new LatLng(latLng.latitude, latLng.longitude));
-
-                case MotionEvent.ACTION_UP:
-                    // finger leaves the screen
+                    case MotionEvent.ACTION_UP:
+                        if(val.size() > 2) {
+                            val.remove( 2);
+                            val.remove( 0);
+                        }
                     Draw_Map();
-                    break;
-            }
+                        break;
+                }
 
-            return Is_MAP_Moveable;
+                    return Is_MAP_Moveable;
+            }
+                return Is_MAP_Moveable;
+
 
         }
         });
@@ -190,11 +215,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void Draw_Map() {
         PolygonOptions rectOptions = new PolygonOptions();
+        seq.addAll(val);
         rectOptions.addAll(val);
         rectOptions.strokeColor(Color.BLUE);
-        rectOptions.strokeWidth(7);
-        rectOptions.fillColor(Color.CYAN);
+        //rectOptions.fillColor(Color.argb(50, 00, 100, 255));
+        rectOptions.strokeWidth(10);
+        rectOptions.strokeJointType(2);
         Polygon polygon = mMap.addPolygon(rectOptions);
+        System.out.println(rectOptions.getPoints());
     }
 
     @Override
