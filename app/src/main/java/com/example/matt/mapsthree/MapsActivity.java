@@ -18,7 +18,9 @@ import com.google.android.gms.maps.model.LatLng;
 
 import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 import com.google.android.gms.maps.model.Marker;
 import android.graphics.Color;
@@ -26,7 +28,7 @@ import android.graphics.Color;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.Polygon;
-//import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import java.util.ArrayList;
 import java.util.List;
 import android.view.View;
@@ -63,6 +65,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<LatLng> val = new ArrayList<LatLng>();
     static List<Double> dist = new ArrayList<Double>();
     public static int loc;
+    public static int areaMode = 0; //0: general, 1: Medium Priority, 2: High Priority
+    public static int areaColor = 16729600;
+    public static PolygonOptions[] areas = new PolygonOptions[3];
     static List<String> def = new ArrayList<String>()
     {{
         add("0");
@@ -90,14 +95,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        FrameLayout fram_map = (FrameLayout) findViewById(R.id.fram_map);
-        Button btn_draw_State = (Button) findViewById(R.id.btn_draw_State);
+
+        //Button btn_draw_State = (Button) findViewById(R.id.btn_draw_State);
          // to detect map is movable
 
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_maps);
-
-        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         // Request write storage permissions
         if (ContextCompat.checkSelfPermission(this,
@@ -113,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             // Permission has already been granted
         }
-
+                
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +142,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        for(i = 0; i < 3; i++)
+        {
+            areas[i] = new PolygonOptions();
+        }
+
         //"Finalize and Continue" button. Advances to the parameter selection activity
         btnNxt = (Button) findViewById(R.id.btnNxt);
         btnNxt.setOnClickListener(new View.OnClickListener() {
@@ -149,12 +157,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         //Turn on and off drawing
+        /*
         btn_draw_State.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Is_MAP_Moveable = !Is_MAP_Moveable;
             }
         });
+        */
+
+
+
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -165,64 +178,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        fram_map.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-        public boolean onTouch(View v, MotionEvent event) {
-                if(Is_MAP_Moveable)
-                {
-                float x = event.getX();
-                float y = event.getY();
-
-                int x_co = Math.round(x);
-                int y_co = Math.round(y);
-
-                Projection projection = mMap.getProjection();
-                Point x_y_points = new Point(x_co, y_co);
-
-                LatLng latLng = mMap.getProjection().fromScreenLocation(x_y_points);
-                double latitude = latLng.latitude;
-
-                double longitude = latLng.longitude;
 
 
-                int eventaction = event.getAction();
-                switch (eventaction) {
-                    case MotionEvent.ACTION_DOWN:
-                        // finger touches the screen
-                        val.add(new LatLng(latitude, longitude));
-
-                    case MotionEvent.ACTION_MOVE:
-                        // finger moves on the screen
-                        val.add(new LatLng(latitude, longitude));
-
-                    case MotionEvent.ACTION_UP:
-                        if(val.size() > 2) {
-                            val.remove( 2);
-                            val.remove( 0);
-                        }
-                    Draw_Map();
-                        break;
-                }
-
-                    return Is_MAP_Moveable;
-            }
-                return Is_MAP_Moveable;
-
-
-        }
-        });
     }
 
     public void Draw_Map() {
         PolygonOptions rectOptions = new PolygonOptions();
         seq.addAll(val);
         rectOptions.addAll(val);
-        rectOptions.strokeColor(Color.BLUE);
+        System.out.println(SpinnerActivity.areaMode);
+        if (SpinnerActivity.areaMode == 0) {
+            rectOptions.strokeColor(Color.RED);
+        }
+        else if (SpinnerActivity.areaMode == 1) {
+            rectOptions.strokeColor(Color.YELLOW);
+        }
+        else {
+            rectOptions.strokeColor(Color.GREEN);
+        }
         //rectOptions.fillColor(Color.argb(50, 00, 100, 255));
         rectOptions.strokeWidth(10);
         rectOptions.strokeJointType(2);
-        Polygon polygon = mMap.addPolygon(rectOptions);
-        System.out.println(rectOptions.getPoints());
+        if (SpinnerActivity.areaMode == 0) {
+            Polygon gen = mMap.addPolygon(rectOptions);
+        }
+        else if (SpinnerActivity.areaMode == 1) {
+            Polygon med = mMap.addPolygon(rectOptions);
+        }
+        else {
+            Polygon hi = mMap.addPolygon(rectOptions);
+        }
+    }
+
+    public void Drawp_Map() {
+        seq.addAll(val);
+        areas[SpinnerActivity.areaMode].addAll(val);
+        if (SpinnerActivity.areaMode == 0) {
+            areas[SpinnerActivity.areaMode].strokeColor(Color.RED);
+        }
+        else if (SpinnerActivity.areaMode == 1) {
+            areas[SpinnerActivity.areaMode].strokeColor(Color.YELLOW);
+        }
+        else {
+            areas[SpinnerActivity.areaMode].strokeColor(Color.GREEN);
+        }
+        //rectOptions.fillColor(Color.argb(50, 00, 100, 255));
+        areas[SpinnerActivity.areaMode].strokeWidth(10);
+        areas[SpinnerActivity.areaMode].strokeJointType(2);
+        if (SpinnerActivity.areaMode == 0) {
+            Polygon gen = mMap.addPolygon(areas[SpinnerActivity.areaMode]);
+        }
+        else if (SpinnerActivity.areaMode == 1) {
+            Polygon med = mMap.addPolygon(areas[SpinnerActivity.areaMode]);
+        }
+        else {
+            Polygon hi = mMap.addPolygon(areas[SpinnerActivity.areaMode]);
+        }
     }
 
     @Override
@@ -233,11 +244,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public class SpinnerActivity extends MapsActivity implements AdapterView.OnItemSelectedListener {
 
+        public void onItemSelected(AdapterView<?> parent, View view,
+                                   int pos, long id) {
+            // An item was selected. You can retrieve the selected item using
+            System.out.println(parent.getItemAtPosition(pos));
+            if (parent.getItemAtPosition(pos).equals("General Area"))
+            {
+                areaMode = 0;
+            }
+            if (parent.getItemAtPosition(pos).equals("Low Priority"))
+            {
+                areaMode = 1;
+            }
+            if (parent.getItemAtPosition(pos).equals("High Priority"))
+            {
+                areaMode = 2;
+            }
+        }
 
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Another interface callback
+        }
+    }
 
     /**
      * Manipulates the map once available.
@@ -265,11 +295,124 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         mMap = googleMap;
 
-        // Add a marker in Rock Canyon and move the camera
-
-        // mMap.addMarker(new MarkerOptions().position(provo).title("marka").draggable(true).snippet("0"));
-
         mMap.moveCamera(CameraUpdateFactory.newLatLng(provo));
+
+        /*
+        mMap.setOnMapLongClickListener(new OnMapLongClickListener() {
+            public void onMapLongClick (LatLng arg0) {
+
+                Is_MAP_Moveable = true;
+            }
+        });
+
+
+
+        mMap.setOnMapLongClickListener(new OnMapLongClickListener() {
+
+            //@Override
+            public void onMapLongClick(LatLng arg0) {
+
+                FrameLayout fram_map = (FrameLayout) findViewById(R.id.fram_map);
+                Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vib.vibrate(10);
+                fram_map.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (Is_MAP_Moveable) {
+                            float x = event.getX();
+                            float y = event.getY();
+
+                            int x_co = Math.round(x);
+                            int y_co = Math.round(y);
+
+                            Projection projection = mMap.getProjection();
+                            Point x_y_points = new Point(x_co, y_co);
+
+                            LatLng latLng = mMap.getProjection().fromScreenLocation(x_y_points);
+                            double latitude = latLng.latitude;
+
+                            double longitude = latLng.longitude;
+
+
+                            int eventaction = event.getAction();
+                            switch (eventaction) {
+                                case MotionEvent.ACTION_DOWN:
+                                    // finger touches the screen
+                                    val.add(new LatLng(latitude, longitude));
+
+                                case MotionEvent.ACTION_MOVE:
+                                    // finger moves on the screen
+                                    val.add(new LatLng(latitude, longitude));
+
+                                case MotionEvent.ACTION_UP:
+                                    if (val.size() > 2) {
+                                        val.remove(2);
+                                        val.remove(0);
+                                    }
+                                    Draw_Map();
+                                    break;
+                            }
+
+                            return Is_MAP_Moveable;
+                        }
+                        Is_MAP_Moveable = false;
+                        return Is_MAP_Moveable;
+
+
+                    }
+                });
+            }
+        });
+        */
+        FrameLayout fram_map = (FrameLayout) findViewById(R.id.fram_map);
+        fram_map.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Switch drawMode = findViewById(R.id.drawMode);
+                Is_MAP_Moveable =  drawMode.isChecked();
+                if (Is_MAP_Moveable) {
+                    float x = event.getX();
+                    float y = event.getY();
+
+                    int x_co = Math.round(x);
+                    int y_co = Math.round(y);
+
+                    Projection projection = mMap.getProjection();
+                    Point x_y_points = new Point(x_co, y_co);
+
+                    LatLng latLng = mMap.getProjection().fromScreenLocation(x_y_points);
+                    double latitude = latLng.latitude;
+
+                    double longitude = latLng.longitude;
+
+
+                    int eventaction = event.getAction();
+                    switch (eventaction) {
+                        case MotionEvent.ACTION_DOWN:
+                            // finger touches the screen
+                            val.add(new LatLng(latitude, longitude));
+
+                        case MotionEvent.ACTION_MOVE:
+                            // finger moves on the screen
+                            val.add(new LatLng(latitude, longitude));
+
+                        case MotionEvent.ACTION_UP:
+                            if (val.size() > 2) {
+                                val.remove(2);
+                                val.remove(0);
+                            }
+                            Draw_Map();
+                            break;
+                    }
+
+                    return Is_MAP_Moveable;
+                }
+                Is_MAP_Moveable = false;
+                return Is_MAP_Moveable;
+
+
+            }
+        });
     }
 
     @Override
