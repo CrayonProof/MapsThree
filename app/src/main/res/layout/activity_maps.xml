@@ -3,7 +3,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,10 +18,19 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/drawMode"
             tools:context="com.example.matt.mapsthree.MapsActivity"
             tools:layout="@android:layout/simple_dropdown_item_1line" />
+
+        <Switch
+            android:id="@+id/drawMode"
+            android:layout_width="124dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Draw Mode" />
 
         <Button
             android:id="@+id/btnSave"
@@ -30,19 +39,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="14dp"
-            android:layout_marginEnd="13dp"
-            android:text="submit with defaults" />
+            android:text="Submit" />
 
         <Button
             android:id="@+id/btnNxt"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btnSave"
-            android:layout_alignEnd="@+id/btnSave"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/btnSave"
             android:backgroundTint="#4177ea"
-            android:text="Edit Parameters" />
+            android:text="Next" />
 
         <Button
             android:id="@+id/btnRef"
@@ -58,21 +65,23 @@
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/drawMode"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/btnSave" />
+            android:layout_toEndOf="@+id/btnRef"
+            android:visibility="visible" />
 
         <FrameLayout
             android:id="@+id/fram_map"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/drawMode">
 
-            <Button
-                android:id="@+id/btn_draw_State"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Free Draw" />
         </FrameLayout>
 
 
     </RelativeLayout>
+
 </FrameLayout>

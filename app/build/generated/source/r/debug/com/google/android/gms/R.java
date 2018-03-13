@@ -78,8 +78,8 @@ public final class R {
         public static final int adjust_height = 0x7f09001b;
         public static final int adjust_width = 0x7f09001c;
         public static final int auto = 0x7f090021;
-        public static final int center = 0x7f09002e;
-        public static final int dark = 0x7f09003c;
+        public static final int center = 0x7f09002d;
+        public static final int dark = 0x7f09003b;
         public static final int hybrid = 0x7f09005c;
         public static final int icon_only = 0x7f09005f;
         public static final int light = 0x7f090067;

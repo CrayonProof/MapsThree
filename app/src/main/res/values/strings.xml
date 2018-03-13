@@ -9,8 +9,7 @@
     <string name="action_settings">Settings</string>
 
     <string-array name="priorityType">
-        <item>Flight Area (no priority)</item>
-        <item>Low Priority</item>
+        <item>General Area</item>
         <item>Medium Priority</item>
         <item>High Priority</item>
     </string-array>
