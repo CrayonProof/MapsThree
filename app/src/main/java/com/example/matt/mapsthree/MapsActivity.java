@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 import com.google.android.gms.maps.model.Marker;
@@ -79,9 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }};
     static int pointMode = 0; //0 = area, 1 = low priority, 2 = med priority, 3 = high priority
     private Spinner spini;
-    Button btnNxt, btnSave, btnRef;
-    EditText txtInput;
-    TextView txtContent;
+    Button btnNxt, btnSave, radOne, radTwo, radThree, newArea;
 
 
     @Override
@@ -156,6 +156,56 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        radOne = findViewById(R.id.radOne);
+        radTwo = findViewById(R.id.radTwo);
+        radThree = findViewById(R.id.radThree);
+
+        radOne.setVisibility(View.INVISIBLE);
+        radTwo.setVisibility(View.INVISIBLE);
+        radThree.setVisibility(View.INVISIBLE);
+
+        FloatingActionButton newArea = findViewById(R.id.newArea);
+        newArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                radOne.setVisibility(View.VISIBLE);
+                radTwo.setVisibility(View.VISIBLE);
+                radThree.setVisibility(View.VISIBLE);
+
+                radOne.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        radOne.setVisibility(View.INVISIBLE);
+                        radTwo.setVisibility(View.INVISIBLE);
+                        radThree.setVisibility(View.INVISIBLE);
+                        Is_MAP_Moveable = true;
+                        read_in_polygon(1);
+                    }
+                });
+                radTwo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        radOne.setVisibility(View.INVISIBLE);
+                        radTwo.setVisibility(View.INVISIBLE);
+                        radThree.setVisibility(View.INVISIBLE);
+                        Is_MAP_Moveable = true;
+                        read_in_polygon(2);
+                    }
+                });
+                radThree.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        radOne.setVisibility(View.INVISIBLE);
+                        radTwo.setVisibility(View.INVISIBLE);
+                        radThree.setVisibility(View.INVISIBLE);
+                        Is_MAP_Moveable = true;
+                        read_in_polygon(3);
+                    }
+                });
+            }
+        });
+
+
         //Turn on and off drawing
         /*
         btn_draw_State.setOnClickListener(new View.OnClickListener() {
@@ -182,33 +232,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public void Draw_Map() {
-        PolygonOptions rectOptions = new PolygonOptions();
-        seq.addAll(val);
-        rectOptions.addAll(val);
-        System.out.println(SpinnerActivity.areaMode);
-        if (SpinnerActivity.areaMode == 0) {
-            rectOptions.strokeColor(Color.RED);
-        }
-        else if (SpinnerActivity.areaMode == 1) {
-            rectOptions.strokeColor(Color.YELLOW);
-        }
-        else {
-            rectOptions.strokeColor(Color.GREEN);
-        }
-        //rectOptions.fillColor(Color.argb(50, 00, 100, 255));
-        rectOptions.strokeWidth(10);
-        rectOptions.strokeJointType(2);
-        if (SpinnerActivity.areaMode == 0) {
-            Polygon gen = mMap.addPolygon(rectOptions);
-        }
-        else if (SpinnerActivity.areaMode == 1) {
-            Polygon med = mMap.addPolygon(rectOptions);
-        }
-        else {
-            Polygon hi = mMap.addPolygon(rectOptions);
-        }
-    }
+
 
     public void Drawp_Map() {
         seq.addAll(val);
@@ -364,12 +388,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         */
+
+    }
+
+    public PolygonOptions read_in_polygon(final int type)
+    {
         FrameLayout fram_map = (FrameLayout) findViewById(R.id.fram_map);
         fram_map.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Switch drawMode = findViewById(R.id.drawMode);
-                Is_MAP_Moveable =  drawMode.isChecked();
+                //Switch drawMode = findViewById(R.id.drawMode);
+                //Is_MAP_Moveable =  drawMode.isChecked();
                 if (Is_MAP_Moveable) {
                     float x = event.getX();
                     float y = event.getY();
@@ -384,35 +413,93 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     double latitude = latLng.latitude;
 
                     double longitude = latLng.longitude;
-
-
-                    int eventaction = event.getAction();
-                    switch (eventaction) {
+                    switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             // finger touches the screen
                             val.add(new LatLng(latitude, longitude));
+                            return true;
 
                         case MotionEvent.ACTION_MOVE:
                             // finger moves on the screen
                             val.add(new LatLng(latitude, longitude));
+                            if (val.size() > 2) {
+                                val.remove(2);
+                                val.remove(0);
+
+                            }
+                            System.out.println("act move");
+                            Draw_Map(type, 0);
+                            return true;
 
                         case MotionEvent.ACTION_UP:
                             if (val.size() > 2) {
                                 val.remove(2);
                                 val.remove(0);
                             }
-                            Draw_Map();
-                            break;
+                            System.out.println("act up");
+                            Draw_Map(type, 1);
+                            for (int i = 0; i < val.size(); i++)
+                            {
+                                val.remove(i);
+                            }
+                            return (false);
+                        //break;
+
                     }
 
                     return Is_MAP_Moveable;
                 }
-                Is_MAP_Moveable = false;
                 return Is_MAP_Moveable;
 
 
             }
         });
+        PolygonOptions gen = new PolygonOptions();
+        gen.addAll(val);
+        if (SpinnerActivity.areaMode == 1) {
+            gen.strokeColor(Color.RED);
+        }
+        else if (SpinnerActivity.areaMode == 2) {
+            gen.strokeColor(Color.YELLOW);
+        }
+        else {
+            gen.strokeColor(Color.GREEN);
+        }
+        gen.strokeWidth(10);
+        gen.strokeJointType(2);
+        return gen;
+    }
+
+    ArrayList<Polygon> gen = new ArrayList<Polygon>();
+    public boolean Draw_Map(int type, int draw) {
+        PolygonOptions rectOptions = new PolygonOptions();
+        seq.addAll(val);
+        rectOptions.addAll(val);
+        System.out.println(SpinnerActivity.areaMode);
+        if (type == 1) {
+            rectOptions.strokeColor(Color.BLACK);
+        } else if (type == 2) {
+            rectOptions.strokeColor(Color.BLACK);
+        } else {
+            rectOptions.strokeColor(Color.BLACK);
+        }
+        //rectOptions.fillColor(Color.argb(50, 00, 100, 255));
+        rectOptions.strokeWidth(10);
+        rectOptions.strokeJointType(2);
+        if (draw == 0) {
+
+            gen.add(mMap.addPolygon(rectOptions));
+        }
+        else
+        {
+            gen.add(mMap.addPolygon(rectOptions));
+            System.out.println("remove");
+            for(Polygon n: gen) {
+                n.remove();
+            }
+            return(true);
+        }
+        return(false);
     }
 
     @Override
