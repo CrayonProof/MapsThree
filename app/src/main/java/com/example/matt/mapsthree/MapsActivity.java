@@ -70,6 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static int areaMode = 0; //0: general, 1: Medium Priority, 2: High Priority
     public static int areaColor = 16729600;
     public static PolygonOptions[] areas = new PolygonOptions[3];
+    ArrayList<Polygon> perim = new ArrayList<Polygon>();
     static List<String> def = new ArrayList<String>()
     {{
         add("0");
@@ -232,8 +233,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
-
     public void Drawp_Map() {
         seq.addAll(val);
         areas[SpinnerActivity.areaMode].addAll(val);
@@ -321,76 +320,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(provo));
 
-        /*
-        mMap.setOnMapLongClickListener(new OnMapLongClickListener() {
-            public void onMapLongClick (LatLng arg0) {
-
-                Is_MAP_Moveable = true;
-            }
-        });
-
-
-
-        mMap.setOnMapLongClickListener(new OnMapLongClickListener() {
-
-            //@Override
-            public void onMapLongClick(LatLng arg0) {
-
-                FrameLayout fram_map = (FrameLayout) findViewById(R.id.fram_map);
-                Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                vib.vibrate(10);
-                fram_map.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (Is_MAP_Moveable) {
-                            float x = event.getX();
-                            float y = event.getY();
-
-                            int x_co = Math.round(x);
-                            int y_co = Math.round(y);
-
-                            Projection projection = mMap.getProjection();
-                            Point x_y_points = new Point(x_co, y_co);
-
-                            LatLng latLng = mMap.getProjection().fromScreenLocation(x_y_points);
-                            double latitude = latLng.latitude;
-
-                            double longitude = latLng.longitude;
-
-
-                            int eventaction = event.getAction();
-                            switch (eventaction) {
-                                case MotionEvent.ACTION_DOWN:
-                                    // finger touches the screen
-                                    val.add(new LatLng(latitude, longitude));
-
-                                case MotionEvent.ACTION_MOVE:
-                                    // finger moves on the screen
-                                    val.add(new LatLng(latitude, longitude));
-
-                                case MotionEvent.ACTION_UP:
-                                    if (val.size() > 2) {
-                                        val.remove(2);
-                                        val.remove(0);
-                                    }
-                                    Draw_Map();
-                                    break;
-                            }
-
-                            return Is_MAP_Moveable;
-                        }
-                        Is_MAP_Moveable = false;
-                        return Is_MAP_Moveable;
-
-
-                    }
-                });
-            }
-        });
-        */
-
     }
 
+    PolygonOptions opt = new PolygonOptions();
     public PolygonOptions read_in_polygon(final int type)
     {
         FrameLayout fram_map = (FrameLayout) findViewById(R.id.fram_map);
@@ -416,7 +348,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             // finger touches the screen
-                            val.add(new LatLng(latitude, longitude));
+                            //val.add(new LatLng(latitude, longitude));
                             return true;
 
                         case MotionEvent.ACTION_MOVE:
@@ -427,8 +359,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 val.remove(0);
 
                             }
+                            else if (val.size() > 1) {
+                                val.remove(0);
+                            }
+                            else
+                            {
+
+                            }
                             System.out.println("act move");
-                            Draw_Map(type, 0);
+                            Draw_Map(type, 0, opt);
+                            opt.addAll(val);
                             return true;
 
                         case MotionEvent.ACTION_UP:
@@ -436,12 +376,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 val.remove(2);
                                 val.remove(0);
                             }
-                            System.out.println("act up");
-                            Draw_Map(type, 1);
-                            for (int i = 0; i < val.size(); i++)
-                            {
-                                val.remove(i);
+                            else if (val.size() > 1) {
+                                //val.remove(0);
                             }
+                            System.out.println("act up");
+                            opt.addAll(val);
+                            if (type == 1) {
+                                opt.strokeColor(Color.RED);
+                            } else if (type == 2) {
+                                opt.strokeColor(Color.YELLOW);
+                            } else {
+                                opt.strokeColor(Color.GREEN);
+                            }
+                            //rectOptions.fillColor(Color.argb(50, 00, 100, 255));
+                            opt.strokeWidth(10);
+                            opt.strokeJointType(2);
+                            opt = (Draw_Map(type, 1, opt));
+                            Is_MAP_Moveable = false;
                             return (false);
                         //break;
 
@@ -454,34 +405,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-        PolygonOptions gen = new PolygonOptions();
-        gen.addAll(val);
-        if (SpinnerActivity.areaMode == 1) {
-            gen.strokeColor(Color.RED);
+        for (int i = 0; i < val.size(); i++)
+        {
+            val.remove(i);
         }
-        else if (SpinnerActivity.areaMode == 2) {
-            gen.strokeColor(Color.YELLOW);
-        }
-        else {
-            gen.strokeColor(Color.GREEN);
-        }
-        gen.strokeWidth(10);
-        gen.strokeJointType(2);
-        return gen;
+
+        return opt;
     }
 
     ArrayList<Polygon> gen = new ArrayList<Polygon>();
-    public boolean Draw_Map(int type, int draw) {
+
+    public PolygonOptions Draw_Map(int type, int draw, PolygonOptions opt) {
         PolygonOptions rectOptions = new PolygonOptions();
         seq.addAll(val);
         rectOptions.addAll(val);
         System.out.println(SpinnerActivity.areaMode);
         if (type == 1) {
-            rectOptions.strokeColor(Color.BLACK);
+            rectOptions.strokeColor(Color.RED);
         } else if (type == 2) {
-            rectOptions.strokeColor(Color.BLACK);
+            rectOptions.strokeColor(Color.YELLOW);
         } else {
-            rectOptions.strokeColor(Color.BLACK);
+            rectOptions.strokeColor(Color.GREEN);
         }
         //rectOptions.fillColor(Color.argb(50, 00, 100, 255));
         rectOptions.strokeWidth(10);
@@ -494,12 +438,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             gen.add(mMap.addPolygon(rectOptions));
             System.out.println("remove");
+            perim.add(mMap.addPolygon(opt));
             for(Polygon n: gen) {
                 n.remove();
             }
-            return(true);
         }
-        return(false);
+        return(rectOptions);
     }
 
     @Override
