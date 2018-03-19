@@ -1,10 +1,44 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v16\\values-v16.xml",
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\32b0c17d4c054c7b94a4d1b13d85c19f\\res\\values-v16\\values-v16.xml",
+                    "source": "/home/matt/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/e7ff9905923045c3e4430f80b263cb64/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "/home/matt/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/d24cc1fe367c3066341041da9a9c4bcc/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v16\\values-v16.xml",
+            "map": [
+                {
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\32b0c17d4c054c7b94a4d1b13d85c19f\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -14,7 +48,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\656e770a06c8f6ee2f9ea6d8a98904b7\\res\\values-v16\\values-v16.xml",
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\656e770a06c8f6ee2f9ea6d8a98904b7\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

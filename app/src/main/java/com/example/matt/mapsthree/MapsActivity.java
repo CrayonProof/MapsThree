@@ -31,6 +31,9 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
+import com.google.android.gms.maps.GoogleMap.OnPolygonClickListener;
+import com.google.android.gms.maps.model.PolylineOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 import android.view.View;
@@ -64,13 +67,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static List<Marker> lowPrio = new ArrayList<Marker>();
     public static List<Marker> medPrio = new ArrayList<Marker>();
     public static List<Marker> hiPrio = new ArrayList<Marker>();
-    ArrayList<LatLng> val = new ArrayList<LatLng>();
+    public static ArrayList<LatLng> val = new ArrayList<LatLng>();
+    public static ArrayList<Polyline> lines = new ArrayList<Polyline>();
     static List<Double> dist = new ArrayList<Double>();
     public static int loc;
     public static int areaMode = 0; //0: general, 1: Medium Priority, 2: High Priority
     public static int areaColor = 16729600;
     public static PolygonOptions[] areas = new PolygonOptions[3];
     ArrayList<Polygon> perim = new ArrayList<Polygon>();
+    ArrayList<Polygon> polyOne = new ArrayList<Polygon>();
+    ArrayList<Polygon> polyTwo = new ArrayList<Polygon>();
+    ArrayList<Polygon> polyThree = new ArrayList<Polygon>();
     static List<String> def = new ArrayList<String>()
     {{
         add("0");
@@ -169,7 +176,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         newArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                radOne.setVisibility(View.VISIBLE);
+                System.out.println(polyOne.size());
+                if (polyOne.size() < 1) { radOne.setVisibility(View.VISIBLE); }
                 radTwo.setVisibility(View.VISIBLE);
                 radThree.setVisibility(View.VISIBLE);
 
@@ -217,9 +225,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         */
 
-
-
-
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -229,8 +234,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
+    }
 
 
+
+    public void editPoly()
+    {
+        mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
+            @Override
+            public void onPolygonClick(Polygon a)
+            {
+                if (polyOne.contains(a))
+                {
+                    polyOne.remove(a);
+                }
+                if (polyTwo.contains(a))
+                {
+                    polyTwo.remove(a);
+                }
+                if (polyThree.contains(a))
+                {
+                    polyThree.remove(a);
+                }
+                a.remove();
+            }
+        });
     }
 
     public void Drawp_Map() {
@@ -263,7 +291,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onStart()
     {
         super.onStart();
-        //"i don't do anything" button. A testing feature to refresh maps activity.
 
     }
 
@@ -322,11 +349,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    PolygonOptions opt = new PolygonOptions();
-    public PolygonOptions read_in_polygon(final int type)
+    public static double preLatitude;
+    public static double preLongitude;
+    public void read_in_polygon(final int type)
     {
+        ArrayList<LatLng> poly = new ArrayList<LatLng>();
         FrameLayout fram_map = (FrameLayout) findViewById(R.id.fram_map);
         fram_map.setOnTouchListener(new View.OnTouchListener() {
+
+            PolygonOptions opt = new PolygonOptions();
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 //Switch drawMode = findViewById(R.id.drawMode);
@@ -343,44 +375,58 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     LatLng latLng = mMap.getProjection().fromScreenLocation(x_y_points);
                     double latitude = latLng.latitude;
-
                     double longitude = latLng.longitude;
+
+
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
+                            System.out.println("down");
                             // finger touches the screen
-                            //val.add(new LatLng(latitude, longitude));
+                            //poly.add(new LatLng(latitude, longitude));
+
+                            preLatitude = latitude;
+                            preLongitude = longitude;
+                            opt.add(new LatLng(latitude, longitude));
+
                             return true;
 
                         case MotionEvent.ACTION_MOVE:
                             // finger moves on the screen
-                            val.add(new LatLng(latitude, longitude));
-                            if (val.size() > 2) {
-                                val.remove(2);
-                                val.remove(0);
+                            System.out.println("moving");
 
+                            PolylineOptions polyOpt = new PolylineOptions();
+                            polyOpt.add(new LatLng(preLatitude, preLongitude));
+                            polyOpt.add(new LatLng(latitude, longitude));
+                            if (type == 1) {
+                                polyOpt.color(Color.RED);
+                            } else if (type == 2) {
+                                polyOpt.color(Color.YELLOW);
+                            } else {
+                                polyOpt.color(Color.GREEN);
                             }
-                            else if (val.size() > 1) {
-                                val.remove(0);
-                            }
-                            else
-                            {
+                            polyOpt.width(10);
 
-                            }
-                            System.out.println("act move");
-                            Draw_Map(type, 0, opt);
-                            opt.addAll(val);
+                            opt.add(new LatLng(latitude, longitude));
+
+                            drawLines(polyOpt);
+                            System.out.print(lines.size());
+
+                            preLatitude = latitude;
+                            preLongitude = longitude;
+
                             return true;
 
                         case MotionEvent.ACTION_UP:
-                            if (val.size() > 2) {
-                                val.remove(2);
-                                val.remove(0);
+                            System.out.println("up");
+
+                            for(Polyline line : lines)
+                            {
+                                line.remove();
                             }
-                            else if (val.size() > 1) {
-                                //val.remove(0);
-                            }
-                            System.out.println("act up");
-                            opt.addAll(val);
+
+
+                            Is_MAP_Moveable = false;
+
                             if (type == 1) {
                                 opt.strokeColor(Color.RED);
                             } else if (type == 2) {
@@ -388,15 +434,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             } else {
                                 opt.strokeColor(Color.GREEN);
                             }
-                            //rectOptions.fillColor(Color.argb(50, 00, 100, 255));
-                            opt.strokeWidth(10);
-                            opt.strokeJointType(2);
-                            opt = (Draw_Map(type, 1, opt));
-                            Is_MAP_Moveable = false;
+
+                            if (type == 1)
+                            {
+                                polyOne.add(mMap.addPolygon(opt));
+                                polyOne.get(polyOne.size()-1).setClickable(true);
+                            }
+                            else if (type == 2)
+                            {
+                                polyTwo.add(mMap.addPolygon(opt));
+                                polyTwo.get(polyTwo.size()-1).setClickable(true);
+                            }
+                            else
+                            {
+                                polyThree.add(mMap.addPolygon(opt));
+                                polyThree.get(polyThree.size()-1).setClickable(true);
+                            }
+
+                            editPoly();
                             return (false);
                         //break;
 
                     }
+
 
                     return Is_MAP_Moveable;
                 }
@@ -405,12 +465,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-        for (int i = 0; i < val.size(); i++)
-        {
-            val.remove(i);
-        }
 
-        return opt;
+        System.out.println("return op");
+    }
+
+    public void drawLines(PolylineOptions a)
+    {
+        lines.add(mMap.addPolyline(a));
     }
 
     ArrayList<Polygon> gen = new ArrayList<Polygon>();
