@@ -4,23 +4,6 @@
             "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ne\\values-ne.xml",
             "map": [
                 {
-                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-11.0.4.aar\\c1bd51046264d3ab15380224b25e3177\\res\\values-ne\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "285",
-                        "endColumns": "222",
-                        "endOffsets": "507"
-                    },
-                    "to": {
-                        "startLines": "28",
-                        "startColumns": "4",
-                        "startOffsets": "3218",
-                        "endColumns": "222",
-                        "endOffsets": "3436"
-                    }
-                },
-                {
                     "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.0.4.aar\\3b947f8cb0364913deaa33694c6c3d34\\res\\values-ne\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
@@ -52,6 +35,23 @@
                         "startOffsets": "105,210,318,441,545,653,744,851,978,1072,1162,1250,1360,1476,1579,1694,1796,1911,2042,4842,4928",
                         "endColumns": "104,107,122,103,107,90,106,126,93,89,87,109,115,102,114,101,114,130,111,85,100",
                         "endOffsets": "205,313,436,540,648,739,846,973,1067,1157,1245,1355,1471,1574,1689,1791,1906,2037,2149,4923,5024"
+                    }
+                },
+                {
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-11.0.4.aar\\c1bd51046264d3ab15380224b25e3177\\res\\values-ne\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "285",
+                        "endColumns": "222",
+                        "endOffsets": "507"
+                    },
+                    "to": {
+                        "startLines": "28",
+                        "startColumns": "4",
+                        "startOffsets": "3218",
+                        "endColumns": "222",
+                        "endOffsets": "3436"
                     }
                 }
             ]

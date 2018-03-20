@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnPolygonClickListener;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +63,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static int i = 0;
     static LatLng provo = new LatLng(40.26844786793794, -111.63785051554441);
     public static List<LatLng> seq = new ArrayList<LatLng>();
-    public static List<Polyline> loneboi = new ArrayList<Polyline>();
-    public static List<Marker> markiboi = new ArrayList<Marker>();
-    public static List<Marker> lowPrio = new ArrayList<Marker>();
-    public static List<Marker> medPrio = new ArrayList<Marker>();
-    public static List<Marker> hiPrio = new ArrayList<Marker>();
     public static ArrayList<LatLng> val = new ArrayList<LatLng>();
     public static ArrayList<Polyline> lines = new ArrayList<Polyline>();
     static List<Double> dist = new ArrayList<Double>();
@@ -78,6 +74,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<Polygon> polyOne = new ArrayList<Polygon>();
     ArrayList<Polygon> polyTwo = new ArrayList<Polygon>();
     ArrayList<Polygon> polyThree = new ArrayList<Polygon>();
+    ArrayList<Polygon> zDelete = new ArrayList<Polygon>();
+
     static List<String> def = new ArrayList<String>()
     {{
         add("0");
@@ -178,8 +176,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 System.out.println(polyOne.size());
                 if (polyOne.size() < 1) { radOne.setVisibility(View.VISIBLE); }
-                radTwo.setVisibility(View.VISIBLE);
-                radThree.setVisibility(View.VISIBLE);
+                else
+                    {
+                        radTwo.setVisibility(View.VISIBLE);
+                        radThree.setVisibility(View.VISIBLE);
+                    }
 
                 radOne.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -236,7 +237,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        if (zDelete.size() > 0)
+        {
+            if (polyOne.contains(zDelete.get(zDelete.size()-1)))
+            {
+                polyOne.remove(zDelete.get(zDelete.size()-1));
+            }
+            if (polyTwo.contains(zDelete.get(zDelete.size()-1)))
+            {
+                polyTwo.remove(zDelete.get(zDelete.size()-1));
+            }
+            if (polyThree.contains(zDelete.get(zDelete.size()-1)))
+            {
+                polyThree.remove(zDelete.get(zDelete.size()-1));
+            }
+            zDelete.get(zDelete.size()-1).remove();
+            zDelete.remove(zDelete.size()-1);
+        }
 
+    }
 
     public void editPoly()
     {
@@ -255,6 +277,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (polyThree.contains(a))
                 {
                     polyThree.remove(a);
+                }
+                if (zDelete.contains(a))
+                {
+                    zDelete.remove(a);
                 }
                 a.remove();
             }
@@ -349,6 +375,61 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    private boolean isPointInPolygon(LatLng tap, Polygon aPoly) {
+
+        ArrayList<LatLng> vertices = new ArrayList<LatLng>();
+        vertices.addAll(aPoly.getPoints());
+
+        int intersectCount = 0;
+        for (int j = 0; j < vertices.size() - 1; j++) {
+            if (rayCastIntersect(tap, vertices.get(j), vertices.get(j + 1))) {
+                intersectCount++;
+            }
+        }
+
+        return ((intersectCount % 2) == 1); // odd = inside, even = outside;
+    }
+
+    private boolean rayCastIntersect(LatLng tap, LatLng vertA, LatLng vertB) {
+
+        double aY = vertA.latitude;
+        double bY = vertB.latitude;
+        double aX = vertA.longitude;
+        double bX = vertB.longitude;
+        double pY = tap.latitude;
+        double pX = tap.longitude;
+
+        if ((aY > pY && bY > pY) || (aY < pY && bY < pY)
+                || (aX < pX && bX < pX)) {
+            return false; // a and b can't both be above or below pt.y, and a or
+            // b must be east of pt.x
+        }
+
+        double m = (aY - bY) / (aX - bX); // Rise over run
+        double bee = (-aX) * m + aY; // y = mx + b
+        double x = (pY - bee) / m; // algebra is neat!
+
+        return x > pX;
+    }
+
+    private LatLng findNearestBound(LatLng point)
+    {
+        LatLng closest = polyOne.get(0).getPoints().get(0);
+        for (int i = 1; i < polyOne.get(0).getPoints().size()-1; i ++)
+        {
+            if (distanceBetween(polyOne.get(0).getPoints().get(i), point) < distanceBetween(closest, point))
+            {
+                closest = polyOne.get(0).getPoints().get(i);
+            }
+        }
+        return closest;
+    }
+
+    private double distanceBetween(LatLng a, LatLng b)
+    {
+        return Math.sqrt(Math.pow(a.latitude - b.latitude, 2) + Math.pow(a.longitude - b.longitude, 2));
+    }
+
     public static double preLatitude;
     public static double preLongitude;
     public void read_in_polygon(final int type)
@@ -374,9 +455,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Point x_y_points = new Point(x_co, y_co);
 
                     LatLng latLng = mMap.getProjection().fromScreenLocation(x_y_points);
+
+                    if (!(type == 1))
+                    {
+                        if(!PolyUtil.containsLocation(latLng, polyOne.get(0).getPoints(), false))
+                        {
+                            latLng = findNearestBound(latLng);
+                        }
+                    }
                     double latitude = latLng.latitude;
                     double longitude = latLng.longitude;
-
 
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
@@ -438,19 +526,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             if (type == 1)
                             {
                                 polyOne.add(mMap.addPolygon(opt));
+                                zDelete.add(polyOne.get(polyOne.size() - 1));
                                 polyOne.get(polyOne.size()-1).setClickable(true);
                             }
                             else if (type == 2)
                             {
                                 polyTwo.add(mMap.addPolygon(opt));
+                                zDelete.add(polyTwo.get(polyTwo.size() - 1));
                                 polyTwo.get(polyTwo.size()-1).setClickable(true);
                             }
                             else
                             {
                                 polyThree.add(mMap.addPolygon(opt));
+                                zDelete.add(polyThree.get(polyThree.size() - 1));
                                 polyThree.get(polyThree.size()-1).setClickable(true);
                             }
-
                             editPoly();
                             return (false);
                         //break;

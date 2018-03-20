@@ -4,23 +4,6 @@
             "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ca\\values-ca.xml",
             "map": [
                 {
-                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.0.4.aar\\3b947f8cb0364913deaa33694c6c3d34\\res\\values-ca\\values.xml",
-                    "from": {
-                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
-                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-                        "startOffsets": "283,386,574,703,810,1022,1151,1286,1523,1630,1824,1957,2185,2372,2463,2557",
-                        "endColumns": "102,187,128,106,211,128,134,236,106,193,132,227,186,90,93,111",
-                        "endOffsets": "385,573,702,809,1021,1150,1285,1522,1629,1823,1956,2184,2371,2462,2556,2668"
-                    },
-                    "to": {
-                        "startLines": "21,22,23,24,25,26,27,29,30,31,32,33,34,35,36,37",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "2094,2201,2389,2522,2633,2845,2978,3315,3552,3663,3857,3994,4222,4413,4508,4606",
-                        "endColumns": "106,187,132,110,211,132,138,236,110,193,136,227,190,94,97,115",
-                        "endOffsets": "2196,2384,2517,2628,2840,2973,3112,3547,3658,3852,3989,4217,4408,4503,4601,4717"
-                    }
-                },
-                {
                     "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-11.0.4.aar\\c1bd51046264d3ab15380224b25e3177\\res\\values-ca\\values.xml",
                     "from": {
                         "startLines": "4",
@@ -35,6 +18,23 @@
                         "startOffsets": "3117",
                         "endColumns": "197",
                         "endOffsets": "3310"
+                    }
+                },
+                {
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.0.4.aar\\3b947f8cb0364913deaa33694c6c3d34\\res\\values-ca\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "283,386,574,703,810,1022,1151,1286,1523,1630,1824,1957,2185,2372,2463,2557",
+                        "endColumns": "102,187,128,106,211,128,134,236,106,193,132,227,186,90,93,111",
+                        "endOffsets": "385,573,702,809,1021,1150,1285,1522,1629,1823,1956,2184,2371,2462,2556,2668"
+                    },
+                    "to": {
+                        "startLines": "21,22,23,24,25,26,27,29,30,31,32,33,34,35,36,37",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "2094,2201,2389,2522,2633,2845,2978,3315,3552,3663,3857,3994,4222,4413,4508,4606",
+                        "endColumns": "106,187,132,110,211,132,138,236,110,193,136,227,190,94,97,115",
+                        "endOffsets": "2196,2384,2517,2628,2840,2973,3112,3547,3658,3852,3989,4217,4408,4503,4601,4717"
                     }
                 },
                 {

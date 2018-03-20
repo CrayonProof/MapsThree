@@ -60,23 +60,6 @@
             "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-be\\values-be.xml",
             "map": [
                 {
-                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-11.0.4.aar\\c1bd51046264d3ab15380224b25e3177\\res\\values-be\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "285",
-                        "endColumns": "204",
-                        "endOffsets": "489"
-                    },
-                    "to": {
-                        "startLines": "28",
-                        "startColumns": "4",
-                        "startOffsets": "3092",
-                        "endColumns": "204",
-                        "endOffsets": "3292"
-                    }
-                },
-                {
                     "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.0.4.aar\\3b947f8cb0364913deaa33694c6c3d34\\res\\values-be\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
@@ -91,6 +74,23 @@
                         "startOffsets": "2075,2184,2378,2505,2617,2831,2959,3297,3518,3627,3821,3951,4163,4352,4451,4543",
                         "endColumns": "108,193,126,111,213,127,132,220,108,193,129,211,188,98,91,107",
                         "endOffsets": "2179,2373,2500,2612,2826,2954,3087,3513,3622,3816,3946,4158,4347,4446,4538,4646"
+                    }
+                },
+                {
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-11.0.4.aar\\c1bd51046264d3ab15380224b25e3177\\res\\values-be\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "285",
+                        "endColumns": "204",
+                        "endOffsets": "489"
+                    },
+                    "to": {
+                        "startLines": "28",
+                        "startColumns": "4",
+                        "startOffsets": "3092",
+                        "endColumns": "204",
+                        "endOffsets": "3292"
                     }
                 },
                 {

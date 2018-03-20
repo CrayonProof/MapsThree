@@ -7,6 +7,7 @@ INJECTED from /home/matt/AndroidStudioProjects/MapsThree/app/src/main/AndroidMan
 MERGED from [com.android.support:design:26.1.0] /home/matt/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/59f6408c32f81b5c25962b56c754bf95/AndroidManifest.xml:17:1-31:12
 MERGED from [com.android.support:appcompat-v7:26.1.0] /home/matt/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/e7ff9905923045c3e4430f80b263cb64/AndroidManifest.xml:17:1-31:12
 MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.0.4.aar/b898e7a13e1189e914db5d205542d829/AndroidManifest.xml:16:1-25:12
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/matt/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/25b1c0372f6130f67452de096432bf2a/AndroidManifest.xml:2:1-13:12
 MERGED from [com.google.firebase:firebase-core:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/firebase-core-11.0.4.aar/48326a99304de431650363be0c0276f9/AndroidManifest.xml:2:1-6:12
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/matt/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/53e1cd5395f3945b7be9af98d90951cd/AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.firebase:firebase-storage:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/firebase-storage-11.0.4.aar/08ed07ec6037fdf024df17b822a164ef/AndroidManifest.xml:2:1-4:12
@@ -67,6 +68,8 @@ MERGED from [com.android.support:appcompat-v7:26.1.0] /home/matt/.gradle/caches/
 MERGED from [com.android.support:appcompat-v7:26.1.0] /home/matt/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/e7ff9905923045c3e4430f80b263cb64/AndroidManifest.xml:25:5-29:19
 MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.0.4.aar/b898e7a13e1189e914db5d205542d829/AndroidManifest.xml:24:5-19
 MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.0.4.aar/b898e7a13e1189e914db5d205542d829/AndroidManifest.xml:24:5-19
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/matt/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/25b1c0372f6130f67452de096432bf2a/AndroidManifest.xml:7:5-11:19
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/matt/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/25b1c0372f6130f67452de096432bf2a/AndroidManifest.xml:7:5-11:19
 MERGED from [com.google.firebase:firebase-core:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/firebase-core-11.0.4.aar/48326a99304de431650363be0c0276f9/AndroidManifest.xml:5:5-20
 MERGED from [com.google.firebase:firebase-core:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/firebase-core-11.0.4.aar/48326a99304de431650363be0c0276f9/AndroidManifest.xml:5:5-20
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/matt/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/53e1cd5395f3945b7be9af98d90951cd/AndroidManifest.xml:9:5-20
@@ -161,6 +164,8 @@ MERGED from [com.android.support:appcompat-v7:26.1.0] /home/matt/.gradle/caches/
 MERGED from [com.android.support:appcompat-v7:26.1.0] /home/matt/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/e7ff9905923045c3e4430f80b263cb64/AndroidManifest.xml:21:5-23:78
 MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.0.4.aar/b898e7a13e1189e914db5d205542d829/AndroidManifest.xml:23:5-43
 MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.0.4.aar/b898e7a13e1189e914db5d205542d829/AndroidManifest.xml:23:5-43
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/matt/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/25b1c0372f6130f67452de096432bf2a/AndroidManifest.xml:5:5-43
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/matt/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/25b1c0372f6130f67452de096432bf2a/AndroidManifest.xml:5:5-43
 MERGED from [com.google.firebase:firebase-core:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/firebase-core-11.0.4.aar/48326a99304de431650363be0c0276f9/AndroidManifest.xml:4:5-43
 MERGED from [com.google.firebase:firebase-core:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/firebase-core-11.0.4.aar/48326a99304de431650363be0c0276f9/AndroidManifest.xml:4:5-43
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/matt/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/53e1cd5395f3945b7be9af98d90951cd/AndroidManifest.xml:5:5-7:41
@@ -273,6 +278,14 @@ ADDED from [com.google.android.gms:play-services-maps:11.0.4] /home/matt/.gradle
 		ADDED from [com.google.android.gms:play-services-maps:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.0.4.aar/b898e7a13e1189e914db5d205542d829/AndroidManifest.xml:21:19-51
 	android:required
 		ADDED from [com.google.android.gms:play-services-maps:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.0.4.aar/b898e7a13e1189e914db5d205542d829/AndroidManifest.xml:21:52-75
+meta-data#com.google.android.gms.version
+ADDED from [com.google.maps.android:android-maps-utils:0.5] /home/matt/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/25b1c0372f6130f67452de096432bf2a/AndroidManifest.xml:8:9-10:69
+MERGED from [com.google.android.gms:play-services-basement:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.0.4.aar/b71d70b0ac01c8462a5ae9c04f5a7363/AndroidManifest.xml:20:9-121
+MERGED from [com.google.android.gms:play-services-basement:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.0.4.aar/b71d70b0ac01c8462a5ae9c04f5a7363/AndroidManifest.xml:20:9-121
+	android:value
+		ADDED from [com.google.maps.android:android-maps-utils:0.5] /home/matt/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/25b1c0372f6130f67452de096432bf2a/AndroidManifest.xml:10:13-66
+	android:name
+		ADDED from [com.google.maps.android:android-maps-utils:0.5] /home/matt/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/25b1c0372f6130f67452de096432bf2a/AndroidManifest.xml:9:13-58
 activity#com.google.android.gms.common.api.GoogleApiActivity
 ADDED from [com.google.android.gms:play-services-base:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-base-11.0.4.aar/f7b68d1783271a0ba172e45e13a050b7/AndroidManifest.xml:19:9-172
 	android:exported
@@ -413,12 +426,6 @@ ADDED from [com.google.firebase:firebase-common:11.0.4] /home/matt/.gradle/cache
 		ADDED from [com.google.firebase:firebase-common:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/firebase-common-11.0.4.aar/09fa29e8f4551f0ea312cc12e766b02b/AndroidManifest.xml:6:169-192
 	android:name
 		ADDED from [com.google.firebase:firebase-common:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/firebase-common-11.0.4.aar/09fa29e8f4551f0ea312cc12e766b02b/AndroidManifest.xml:6:79-143
-meta-data#com.google.android.gms.version
-ADDED from [com.google.android.gms:play-services-basement:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.0.4.aar/b71d70b0ac01c8462a5ae9c04f5a7363/AndroidManifest.xml:20:9-121
-	android:value
-		ADDED from [com.google.android.gms:play-services-basement:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.0.4.aar/b71d70b0ac01c8462a5ae9c04f5a7363/AndroidManifest.xml:20:66-119
-	android:name
-		ADDED from [com.google.android.gms:play-services-basement:11.0.4] /home/matt/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.0.4.aar/b71d70b0ac01c8462a5ae9c04f5a7363/AndroidManifest.xml:20:20-65
 meta-data#android.arch.lifecycle.VERSION
 ADDED from [android.arch.lifecycle:runtime:1.0.0] /home/matt/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/e7f924009e771c4b820b77f84cf40990/AndroidManifest.xml:25:9-27:47
 	android:value
