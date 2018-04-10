@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v18/values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\656e770a06c8f6ee2f9ea6d8a98904b7\\res\\values-v18\\values-v18.xml",
+                    "source": "/home/matt/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/e7ff9905923045c3e4430f80b263cb64/res/values-v18/values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -16,10 +16,10 @@
             ]
         },
         {
-            "outputFile": "C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\656e770a06c8f6ee2f9ea6d8a98904b7\\res\\values-v18\\values-v18.xml",
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\656e770a06c8f6ee2f9ea6d8a98904b7\\res\\values-v18\\values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -31,10 +31,25 @@
             ]
         },
         {
-            "outputFile": "C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\home\\matt\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\e7ff9905923045c3e4430f80b263cb64\\res\\values-v18\\values-v18.xml",
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\e7ff9905923045c3e4430f80b263cb64\\res\\values-v18\\values-v18.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "48",
+                        "endOffsets": "99"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
+            "map": [
+                {
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\home\\matt\\AndroidStudioProjects\\MapsThree\\C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\656e770a06c8f6ee2f9ea6d8a98904b7\\res\\values-v18\\values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

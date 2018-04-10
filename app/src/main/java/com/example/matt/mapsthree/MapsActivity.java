@@ -5,16 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.provider.SyncStateContract;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.support.v4.content.ContextCompat;
@@ -33,6 +41,8 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnPolygonClickListener;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.maps.android.PolyUtil;
 
 import java.util.ArrayList;
@@ -46,7 +56,9 @@ import android.os.Vibrator;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.Manifest;
+import com.google.android.gms.location.FusedLocationProviderClient;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -88,6 +100,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static int pointMode = 0; //0 = area, 1 = low priority, 2 = med priority, 3 = high priority
     private Spinner spini;
     Button btnNxt, btnSave, radOne, radTwo, radThree, newArea;
+    RadioGroup polyType;
+    private FusedLocationProviderClient mFusedLocationClient;
 
 
     @Override
@@ -121,6 +135,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             // Permission has already been granted
         }
+
+        if (ContextCompat.checkSelfPermission(this,
+                ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+
+            // No explanation needed; request the permission
+            ActivityCompat.requestPermissions(this,
+                    new String[]{ACCESS_FINE_LOCATION},
+                    102);
+        } else {
+            // Permission has already been granted
+        }
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -160,33 +190,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(new Intent(MapsActivity.this, ParamActivity.class));
             }
         });
-
+        polyType = (RadioGroup)findViewById(R.id.polyType);
         radOne = findViewById(R.id.radOne);
         radTwo = findViewById(R.id.radTwo);
         radThree = findViewById(R.id.radThree);
+        polyType.clearCheck();
 
-        radOne.setVisibility(View.INVISIBLE);
-        radTwo.setVisibility(View.INVISIBLE);
-        radThree.setVisibility(View.INVISIBLE);
+        polyType.setVisibility(View.INVISIBLE);
 
         FloatingActionButton newArea = findViewById(R.id.newArea);
         newArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(polyOne.size());
-                if (polyOne.size() < 1) { radOne.setVisibility(View.VISIBLE); }
+                if (polyOne.size() < 1)
+                {
+                    radOne.setVisibility(View.VISIBLE);
+                    radTwo.setVisibility(View.INVISIBLE);
+                    radThree.setVisibility(View.INVISIBLE);
+                }
                 else
                     {
+                        radOne.setVisibility(View.INVISIBLE);
                         radTwo.setVisibility(View.VISIBLE);
                         radThree.setVisibility(View.VISIBLE);
                     }
+                polyType.setVisibility(View.VISIBLE);
 
                 radOne.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        radOne.setVisibility(View.INVISIBLE);
-                        radTwo.setVisibility(View.INVISIBLE);
-                        radThree.setVisibility(View.INVISIBLE);
+                        polyType.setVisibility(View.INVISIBLE);
                         Is_MAP_Moveable = true;
                         read_in_polygon(1);
                     }
@@ -194,9 +227,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 radTwo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        radOne.setVisibility(View.INVISIBLE);
-                        radTwo.setVisibility(View.INVISIBLE);
-                        radThree.setVisibility(View.INVISIBLE);
+                        polyType.setVisibility(View.INVISIBLE);
                         Is_MAP_Moveable = true;
                         read_in_polygon(2);
                     }
@@ -204,9 +235,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 radThree.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        radOne.setVisibility(View.INVISIBLE);
-                        radTwo.setVisibility(View.INVISIBLE);
-                        radThree.setVisibility(View.INVISIBLE);
+                        polyType.setVisibility(View.INVISIBLE);
                         Is_MAP_Moveable = true;
                         read_in_polygon(3);
                     }
@@ -370,7 +399,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(provo));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(provo));
+        centerMapOnMyLocation();
+
+
+    }
+
+    private void centerMapOnMyLocation() {
+        if(ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {mMap.setMyLocationEnabled(true);
+
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            LatLng myLocation = new LatLng(40.6892, -74.0445);
+                            if (location != null) {
+                                myLocation = new LatLng(location.getLatitude(),
+                                        location.getLongitude());
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
+                            }
+                                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
+                        }
+                    }).addOnFailureListener(this, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+        }
+
 
     }
 
@@ -414,7 +472,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng findNearestBound(LatLng point)
     {
         LatLng closest = polyOne.get(0).getPoints().get(0);
-        for (int i = 1; i < polyOne.get(0).getPoints().size()-1; i ++)
+        for (int i = 1; i < polyOne.get(0).getPoints().size(); i ++)
         {
             if (distanceBetween(polyOne.get(0).getPoints().get(i), point) < distanceBetween(closest, point))
             {
@@ -455,6 +513,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     LatLng latLng = mMap.getProjection().fromScreenLocation(x_y_points);
 
+                    /*
                     if (!(type == 1))
                     {
                         if(!PolyUtil.containsLocation(latLng, polyOne.get(0).getPoints(), false))
@@ -462,6 +521,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             latLng = findNearestBound(latLng);
                         }
                     }
+                    */
+
                     double latitude = latLng.latitude;
                     double longitude = latLng.longitude;
 
@@ -526,19 +587,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             {
                                 polyOne.add(mMap.addPolygon(opt));
                                 zDelete.add(polyOne.get(polyOne.size() - 1));
+                                polyOne.get(polyOne.size()-1).setPoints(simplifyPoly(polyOne.get(polyOne.size()-1)));
                                 polyOne.get(polyOne.size()-1).setClickable(true);
+                                polyOne.get(polyOne.size()-1).setPoints(setPolyClockwise(polyOne.get(polyOne.size()-1)));
                             }
                             else if (type == 2)
                             {
                                 polyTwo.add(mMap.addPolygon(opt));
                                 zDelete.add(polyTwo.get(polyTwo.size() - 1));
                                 polyTwo.get(polyTwo.size()-1).setClickable(true);
+                                polyTwo.get(polyTwo.size()-1).setPoints(simplifyPoly(polyTwo.get(polyTwo.size()-1)));
+                                polyTwo.get(polyTwo.size()-1).setPoints(setPolyClockwise(polyTwo.get(polyTwo.size()-1)));
+                                polyTwo.get(polyTwo.size()-1).setPoints(trimGon(polyTwo.get(polyTwo.size()-1)));
                             }
                             else
                             {
                                 polyThree.add(mMap.addPolygon(opt));
                                 zDelete.add(polyThree.get(polyThree.size() - 1));
                                 polyThree.get(polyThree.size()-1).setClickable(true);
+                                polyThree.get(polyThree.size()-1).setPoints(simplifyPoly(polyThree.get(polyThree.size()-1)));
+                                polyThree.get(polyThree.size()-1).setPoints(setPolyClockwise(polyThree.get(polyThree.size()-1)));
+                                polyThree.get(polyThree.size()-1).setPoints(trimGon(polyThree.get(polyThree.size()-1)));
                             }
                             editPoly();
                             return (false);
@@ -556,6 +625,160 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         System.out.println("return op");
+    }
+
+    private ArrayList<LatLng> simplifyPoly(Polygon p)
+    {
+        ArrayList<LatLng> pList = new ArrayList<LatLng>();
+        pList.addAll(p.getPoints());
+        double deltaTheta = 0;
+        double x1;
+        double x2;
+        double y1;
+        double y2;
+        ArrayList<Integer> toDelete = new ArrayList<Integer>();
+        double THETA_THRESHOLD = Math.toRadians(15); //critical value for significant vertices.
+        int lookingAt = 0;
+        for (int i = 1; i < pList.size(); i ++)
+        {
+            x1 = pList.get(lookingAt).longitude;
+            x2 = pList.get(i).longitude;
+            y1 = pList.get(lookingAt).latitude;
+            y2 = pList.get(i).latitude;
+            if ((x1 == x2)&&(y1==y2))
+                toDelete.add(i);
+            else if((y2 < y1) == (x2 < x1))
+                deltaTheta = (Math.abs((y2-y1)/(x2-x1)));
+            else
+                deltaTheta = (Math.abs((x2-x1)/(y2-y1)));
+            System.out.println((y2-y1)/(x2-x1));
+            System.out.println("deltaTheta: " + deltaTheta);
+            System.out.println("THRESHOLD: " + THETA_THRESHOLD);
+            if (!(deltaTheta > THETA_THRESHOLD))
+            {
+                toDelete.add(i);
+            }
+            else
+            {
+                deltaTheta = 0;
+                lookingAt = i;
+            }
+        }
+        System.out.println("toDelete size: " + toDelete.size());
+        System.out.println("pList size 1: " + pList.size());
+        for (int i = toDelete.size() - 1; i > 0; i--)
+        {
+            pList.remove((int) toDelete.get(i));
+        }
+        System.out.println("pList size 2: " + pList.size());
+
+        return pList;
+    }
+
+    //recursively finds boundary to within 1 meter with bianary search
+    public LatLng findIntersect(LatLng a, LatLng b, int i) //a is outside, b is inside
+    {
+        LatLng c = new LatLng ((a.latitude - b.latitude) /2 + b.latitude, (a.longitude - b.longitude) /2 + b.longitude);
+        boolean pointInside = PolyUtil.containsLocation(c, polyOne.get(0).getPoints(), false);
+        if (pointInside)
+        {
+            if (i > 15)
+            {
+                return c;
+            }
+            else
+            {
+                return findIntersect(a, c, i +1);
+            }
+        }
+        else
+        {
+            if (i > 15)
+            {
+                return b;
+            }
+            else
+            {
+                return findIntersect(c, b, i +1);
+            }
+        }
+
+    }
+
+    //TODO:Check where points are being added. Should add only at entry and exit. Maybe check recursive boundary search
+
+    private List trimGon(Polygon po)
+    {
+        int start = 0;
+        int end = 0;
+        List poList = po.getPoints();
+        ArrayList<LatLng> inList = new ArrayList<LatLng>();
+        int s = 0;
+
+        if (PolyUtil.containsLocation(po.getPoints().get(i), polyOne.get(0).getPoints(), false))
+        {
+
+        }
+        boolean addToEnd = true;
+        boolean currentPointInside;
+        boolean previousPointInside;
+
+        //creates an ordered list of all points inside priority area from first inside to last inside
+        for (int i = 0; i < polyOne.get(0).getPoints().size(); i++)
+        {
+            currentPointInside = PolyUtil.containsLocation(polyOne.get(0).getPoints().get(i), po.getPoints(), false);
+            previousPointInside = PolyUtil.containsLocation(polyOne.get(0).getPoints().get(trueMod((i - 1), polyOne.get(0).getPoints().size())), po.getPoints(), false);
+            if(!currentPointInside) //outside priority area
+            {
+                if (currentPointInside = !previousPointInside) //just exited
+                {
+                    addToEnd = false;
+                    inList.add(findIntersect(polyOne.get(0).getPoints().get(i), polyOne.get(0).getPoints().get(trueMod(i-1, polyOne.get(0).getPoints().size())), 0));
+                }
+
+            }
+            else // inside priority area
+            {
+                if (currentPointInside = !previousPointInside) //just entered
+                {
+                    inList.add(findIntersect(polyOne.get(0).getPoints().get(trueMod(i-1, polyOne.get(0).getPoints().size())), polyOne.get(0).getPoints().get(i), 0));
+                }
+                if (addToEnd)
+                {
+                    inList.add(polyOne.get(0).getPoints().get(i));
+                }
+                else
+                {
+                    inList.add(s, polyOne.get(0).getPoints().get(i));
+                    s++;
+                }
+            }
+        }
+
+        boolean alreadyBeenIn = false;
+        for (int i = 0; i < po.getPoints().size(); i++)
+        {
+            if (!PolyUtil.containsLocation(po.getPoints().get(i), polyOne.get(0).getPoints(), false)) //outside survey area
+            {
+                //if just exited
+                if ((PolyUtil.containsLocation(po.getPoints().get(i), polyOne.get(0).getPoints(), false)) != (PolyUtil.containsLocation(po.getPoints().get(trueMod((i - 1), po.getPoints().size())), polyOne.get(0).getPoints(), false)))
+                {
+                    start = i;
+                }
+                poList.remove(po.getPoints().get(i));
+            }
+        }
+        for (int i = inList.size()-1; i > -1; i--)
+        {
+            poList.add(trueMod(start, poList.size()), inList.get(i));
+        }
+
+        return poList;
+    }
+
+    private int trueMod(int number, int mod)
+    {
+       return ((number % mod) + mod) % mod;
     }
 
     public void drawLines(PolylineOptions a)
@@ -594,6 +817,67 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
         return(rectOptions);
+    }
+
+    private List<LatLng> setPolyClockwise(Polygon p) {
+        List<LatLng> pList = p.getPoints();
+        int minX = 0;
+        int minY = 0;
+        int maxX = 0;
+        int maxY = 0;
+
+        for(int i = 1; i < pList.size(); i++)
+        {
+            if(pList.get(i).latitude < pList.get(minY).latitude) //min y
+            {
+                minY = i;
+
+            }
+            else if(pList.get(i).latitude > pList.get(maxY).latitude) //max y
+            {
+                maxY = i;
+            }
+            if(pList.get(i).longitude < pList.get(minX).longitude) //min x
+            {
+                minX = i;
+
+            }
+            else if(pList.get(i).longitude > pList.get(maxX).longitude) //max x
+            {
+                maxX = i;
+            }
+        }
+        int k = minY;
+        boolean clockwise;
+        while (true)
+        {
+            if(pList.get(k).equals(pList.get(minX))) //hits min first (clockwise)
+            {
+                clockwise = true;
+                break;
+            }
+            else if(pList.get(k).equals(pList.get(maxX))) //hits max first (counterclockwise)
+            {
+                clockwise = false;
+                break;
+            }
+            k = trueMod(k + 1, pList.size());
+        }
+        if (clockwise) {return pList;}
+        else {System.out.println("FLIPPED"); return reverseList(pList);}
+    }
+
+    private List<LatLng> reverseList(List<LatLng> list)
+    {
+        LatLng container;
+        for (int i = 0; i < Math.floor(list.size()/2); i ++)
+        {
+            container = list.get(i);
+            list.set(i, list.get(list.size()-1-i));
+            list.set(list.size()-1-i, container);
+
+        }
+        return list;
     }
 
     @Override

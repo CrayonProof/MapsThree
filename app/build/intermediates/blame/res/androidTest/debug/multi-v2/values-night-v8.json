@@ -1,10 +1,25 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-night-v8\\values-night-v8.xml",
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\StudioProjects\\MapsThree\\app\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-night-v8\\values-night-v8.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\656e770a06c8f6ee2f9ea6d8a98904b7\\res\\values-night-v8\\values-night-v8.xml",
+                    "source": "/home/matt/AndroidStudioProjects/MapsThree/C:\\Users\\Matthew\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\656e770a06c8f6ee2f9ea6d8a98904b7\\res\\values-night-v8\\values-night-v8.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,125,209,293,389,491,593",
+                        "endColumns": "69,83,83,95,101,101,93",
+                        "endOffsets": "120,204,288,384,486,588,682"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/matt/AndroidStudioProjects/MapsThree/app/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-night-v8/values-night-v8.xml",
+            "map": [
+                {
+                    "source": "/home/matt/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/e7ff9905923045c3e4430f80b263cb64/res/values-night-v8/values-night-v8.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8",
                         "startColumns": "4,4,4,4,4,4,4",
