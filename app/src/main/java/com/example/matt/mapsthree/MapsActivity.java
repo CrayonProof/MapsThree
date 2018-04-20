@@ -709,10 +709,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private List trimGon(Polygon po)
     {
-        int start = 0;
-        int end = 0;
+        int priorityStart = 0;
+        int priorityEnd = 0;
+        int generalStart = 0;
+        int generalEnd = 0;
+        LatLng[] entryIntersect = new LatLng[4]; //stores 4 points necessary to calculate intersection, priority line is defined by first two points, general line is defined by second two
+        LatLng[] exitIntersect = new LatLng[4]; //same as above but for exit intersection
         List poList = po.getPoints();
         ArrayList<LatLng> inList = new ArrayList<LatLng>();
+        ArrayList<LatLng> outList = new ArrayList<LatLng>();
         int s = 0;
 
         if (PolyUtil.containsLocation(po.getPoints().get(i), polyOne.get(0).getPoints(), false))
@@ -724,16 +729,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         boolean previousPointInside;
 
         //creates an ordered list of all points inside priority area from first inside to last inside
-        for (int i = 0; i < polyOne.get(0).getPoints().size(); i++)
+        for (int i = 0; i < polyOne.get(0).getPoints().size(); i++) //for all survey points
         {
             currentPointInside = PolyUtil.containsLocation(polyOne.get(0).getPoints().get(i), po.getPoints(), false);
             previousPointInside = PolyUtil.containsLocation(polyOne.get(0).getPoints().get(trueMod((i - 1), polyOne.get(0).getPoints().size())), po.getPoints(), false);
+            System.out.println(i + ":  currPo: " + currentPointInside + " prePo: " + previousPointInside);
             if(!currentPointInside) //outside priority area
             {
                 if (currentPointInside = !previousPointInside) //just exited
                 {
                     addToEnd = false;
-                    inList.add(findIntersect(polyOne.get(0).getPoints().get(i), polyOne.get(0).getPoints().get(trueMod(i-1, polyOne.get(0).getPoints().size())), 0));
+                    generalEnd = i;
+                    entryIntersect[3] = polyOne.get(0).getPoints().get(i);
+                    entryIntersect[4] = polyOne.get(0).getPoints().get(trueMod((i - 1), polyOne.get(0).getPoints().size()));
+                    //inList.add(findIntersect(polyOne.get(0).getPoints().get(i), polyOne.get(0).getPoints().get(trueMod(i-1, polyOne.get(0).getPoints().size())), 0));
+                    //inList.add(new LatLng(0, 0));
                 }
 
             }
@@ -741,7 +751,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             {
                 if (currentPointInside = !previousPointInside) //just entered
                 {
-                    inList.add(findIntersect(polyOne.get(0).getPoints().get(trueMod(i-1, polyOne.get(0).getPoints().size())), polyOne.get(0).getPoints().get(i), 0));
+                    generalStart = i;
+                    exitIntersect[3] = polyOne.get(0).getPoints().get(i);
+                    exitIntersect[4] = polyOne.get(0).getPoints().get(trueMod((i - 1), polyOne.get(0).getPoints().size()));
+                    //inList.add(findIntersect(polyOne.get(0).getPoints().get(trueMod(i-1, polyOne.get(0).getPoints().size())), polyOne.get(0).getPoints().get(i), 0));
+                    //inList.add(new LatLng(0, 0));
                 }
                 if (addToEnd)
                 {
@@ -756,24 +770,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         boolean alreadyBeenIn = false;
-        for (int i = 0; i < po.getPoints().size(); i++)
+        for (int i = 0; i < po.getPoints().size(); i++) //for all priority points
         {
-            if (!PolyUtil.containsLocation(po.getPoints().get(i), polyOne.get(0).getPoints(), false)) //outside survey area
+            currentPointInside = PolyUtil.containsLocation(po.getPoints().get(i), polyOne.get(0).getPoints(), false);
+            previousPointInside = PolyUtil.containsLocation(po.getPoints().get(trueMod((i - 1), po.getPoints().size())), polyOne.get(0).getPoints(), false);
+            if (!currentPointInside) //outside survey area
             {
                 //if just exited
-                if ((PolyUtil.containsLocation(po.getPoints().get(i), polyOne.get(0).getPoints(), false)) != (PolyUtil.containsLocation(po.getPoints().get(trueMod((i - 1), po.getPoints().size())), polyOne.get(0).getPoints(), false)))
+                if (currentPointInside = !previousPointInside)
                 {
-                    start = i;
+                    priorityStart = i;
+                    exitIntersect[1] = po.getPoints().get(i);
+                    exitIntersect[2] = polyOne.get(0).getPoints().get(trueMod((i - 1), po.getPoints().size()));
                 }
                 poList.remove(po.getPoints().get(i));
             }
+            else
+            {
+                if (currentPointInside = !previousPointInside)
+                {
+                    priorityEnd = i;
+                    entryIntersect[1] = po.getPoints().get(i);
+                    entryIntersect[2] = polyOne.get(0).getPoints().get(trueMod((i - 1), po.getPoints().size()));
+                }
+            }
         }
+        poList.add(trueMod(priorityEnd, poList.size()), findIntersectionByPoints(entryIntersect));
         for (int i = inList.size()-1; i > -1; i--)
         {
-            poList.add(trueMod(start, poList.size()), inList.get(i));
+            poList.add(trueMod(priorityStart, poList.size()), inList.get(i));
         }
+        poList.add(trueMod(priorityStart, poList.size()), findIntersectionByPoints(exitIntersect));
 
         return poList;
+    }
+
+    private LatLng findIntersectionByPoints(LatLng[] points)
+    {
+
     }
 
     private int trueMod(int number, int mod)
