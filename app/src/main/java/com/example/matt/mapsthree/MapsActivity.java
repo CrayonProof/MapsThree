@@ -807,7 +807,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private LatLng findIntersectionByPoints(LatLng[] points)
     {
+        double ya1 = points[1].latitude;
+        double ya2 = points[2].latitude;
+        double xa1 = points[1].longitude;
+        double xa2 = points[2].longitude;
+        double yb1 = points[3].latitude;
+        double yb2 = points[4].latitude;
+        double xb1 = points[3].longitude;
+        double xb2 = points[4].longitude;
 
+        double ma = (ya1-ya2)/(xa1-xa2);
+        double mb = (yb1-yb2)/(xb1-xb2);
+
+        double ba = ya1 - (ma*xa1);
+        double bb = yb1 - (mb*xb1);
+
+        double x = (ba-bb)/(ma*mb);
+        double y = ma*x + ba;
+
+        return new LatLng(x, y);
     }
 
     private int trueMod(int number, int mod)
