@@ -60,6 +60,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
+import java.util.PriorityQueue;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -83,7 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static int areaColor = 16729600;
     public static PolygonOptions[] areas = new PolygonOptions[3];
     ArrayList<Polygon> perim = new ArrayList<Polygon>();
-    ArrayList<Polygon> polyOne = new ArrayList<Polygon>();
+    public static ArrayList<Polygon> polyOne = new ArrayList<Polygon>();
     ArrayList<Polygon> polyTwo = new ArrayList<Polygon>();
     ArrayList<Polygon> polyThree = new ArrayList<Polygon>();
     ArrayList<Polygon> zDelete = new ArrayList<Polygon>();
@@ -385,7 +387,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //Allows Filehelper class to be called and passed marker LatLng (local data) from other classes.
     public static boolean saveFile(List<String> arg0)
     {
-        if (FileHelper.saveToFile(seq, i, arg0)){
+        if (FileHelper.saveToFile(polyOne.get(0).getPoints(), polyOne.get(0).getPoints().size(), arg0)){
             return true;
         }else{
             return false;
@@ -464,7 +466,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         double m = (aY - bY) / (aX - bX); // Rise over run
         double bee = (-aX) * m + aY; // y = mx + b
-        double x = (pY - bee) / m; // algebra is neat!
+        double x = (pY - bee) / m; // algebra
 
         return x > pX;
     }
@@ -629,50 +631,77 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private ArrayList<LatLng> simplifyPoly(Polygon p)
     {
-        ArrayList<LatLng> pList = new ArrayList<LatLng>();
-        pList.addAll(p.getPoints());
-        double deltaTheta = 0;
-        double x1;
-        double x2;
-        double y1;
-        double y2;
-        ArrayList<Integer> toDelete = new ArrayList<Integer>();
-        double THETA_THRESHOLD = Math.toRadians(15); //critical value for significant vertices.
-        int lookingAt = 0;
-        for (int i = 1; i < pList.size(); i ++)
-        {
-            x1 = pList.get(lookingAt).longitude;
-            x2 = pList.get(i).longitude;
-            y1 = pList.get(lookingAt).latitude;
-            y2 = pList.get(i).latitude;
-            if ((x1 == x2)&&(y1==y2))
-                toDelete.add(i);
-            else if((y2 < y1) == (x2 < x1))
-                deltaTheta = (Math.abs((y2-y1)/(x2-x1)));
-            else
-                deltaTheta = (Math.abs((x2-x1)/(y2-y1)));
-            System.out.println((y2-y1)/(x2-x1));
-            System.out.println("deltaTheta: " + deltaTheta);
-            System.out.println("THRESHOLD: " + THETA_THRESHOLD);
-            if (!(deltaTheta > THETA_THRESHOLD))
-            {
-                toDelete.add(i);
-            }
-            else
-            {
-                deltaTheta = 0;
-                lookingAt = i;
-            }
-        }
-        System.out.println("toDelete size: " + toDelete.size());
-        System.out.println("pList size 1: " + pList.size());
-        for (int i = toDelete.size() - 1; i > 0; i--)
-        {
-            pList.remove((int) toDelete.get(i));
-        }
-        System.out.println("pList size 2: " + pList.size());
+        int vertices =4;
 
-        return pList;
+        if (vertices == -1)
+        {
+
+            ArrayList<LatLng> pList = new ArrayList<LatLng>();
+            pList.addAll(p.getPoints());
+            double deltaTheta = 0;
+            double x1;
+            double x2;
+            double y1;
+            double y2;
+            ArrayList<Integer> toDelete = new ArrayList<Integer>();
+            double THETA_THRESHOLD = Math.toRadians(60); //critical value for significant vertices.
+            int lookingAt = 0;
+            for (int i = 1; i < pList.size(); i ++)
+            {
+                x1 = pList.get(lookingAt).longitude;
+                x2 = pList.get(i).longitude;
+                y1 = pList.get(lookingAt).latitude;
+                y2 = pList.get(i).latitude;
+                if ((x1 == x2)&&(y1==y2))
+                    toDelete.add(i);
+                else if((y2 < y1) == (x2 < x1))
+                    deltaTheta = (Math.abs((y2-y1)/(x2-x1)));
+                else
+                    deltaTheta = (Math.abs((x2-x1)/(y2-y1)));
+                System.out.println((y2-y1)/(x2-x1));
+                System.out.println("deltaTheta: " + deltaTheta);
+                System.out.println("THRESHOLD: " + THETA_THRESHOLD);
+                if (!(deltaTheta > THETA_THRESHOLD))
+                {
+                    toDelete.add(i);
+                }
+                else
+                {
+                    deltaTheta = 0;
+                    lookingAt = i;
+                }
+            }
+            System.out.println("toDelete size: " + toDelete.size());
+            System.out.println("pList size 1: " + pList.size());
+            for (int i = toDelete.size() - 1; i > 0; i--)
+            {
+                pList.remove((int) toDelete.get(i));
+            }
+            System.out.println("pList size 2: " + pList.size());
+
+            return pList;
+        }
+        else
+        {
+            CyclicArrayList<LatLng> pList = new CyclicArrayList<LatLng>();
+            pList.addAll(p.getPoints());
+            for (int i = 1; i < pList.size(); i ++)
+            {
+                //TODO: create array of top [vertices] angles, then replace pList with that
+            }
+            return pList;
+        }
+
+
+    }
+
+    private double findAngle(LatLng a, LatLng b, LatLng c)
+    {
+        double ab = Math.sqrt(Math.pow((a.longitude - b.longitude), 2) + Math.pow((a.latitude - b.latitude), 2));
+        double bc = Math.sqrt(Math.pow((b.longitude - c.longitude), 2) + Math.pow((b.latitude - c.latitude), 2));
+        double ac = Math.sqrt(Math.pow((a.longitude - c.longitude), 2) + Math.pow((a.latitude - c.latitude), 2));
+
+        return Math.acos((Math.pow(ab, 2) + (Math.pow(ac, 2) - (Math.pow(bc, 2))))/(2 * ab * ac));
     }
 
     //recursively finds boundary to within 1 meter with bianary search
@@ -740,8 +769,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 {
                     addToEnd = false;
                     generalEnd = i;
-                    entryIntersect[3] = polyOne.get(0).getPoints().get(i);
-                    entryIntersect[4] = polyOne.get(0).getPoints().get(trueMod((i - 1), polyOne.get(0).getPoints().size()));
+                    //entryIntersect[2] = polyOne.get(0).getPoints().get(i);
+                    //entryIntersect[3] = polyOne.get(0).getPoints().get(trueMod((i - 1), polyOne.get(0).getPoints().size()));
                     //inList.add(findIntersect(polyOne.get(0).getPoints().get(i), polyOne.get(0).getPoints().get(trueMod(i-1, polyOne.get(0).getPoints().size())), 0));
                     //inList.add(new LatLng(0, 0));
                 }
@@ -752,8 +781,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (currentPointInside = !previousPointInside) //just entered
                 {
                     generalStart = i;
-                    exitIntersect[3] = polyOne.get(0).getPoints().get(i);
-                    exitIntersect[4] = polyOne.get(0).getPoints().get(trueMod((i - 1), polyOne.get(0).getPoints().size()));
+                    //exitIntersect[2] = polyOne.get(0).getPoints().get(i);
+                    //exitIntersect[3] = polyOne.get(0).getPoints().get(trueMod((i - 1), polyOne.get(0).getPoints().size()));
                     //inList.add(findIntersect(polyOne.get(0).getPoints().get(trueMod(i-1, polyOne.get(0).getPoints().size())), polyOne.get(0).getPoints().get(i), 0));
                     //inList.add(new LatLng(0, 0));
                 }
@@ -780,8 +809,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (currentPointInside = !previousPointInside)
                 {
                     priorityStart = i;
-                    exitIntersect[1] = po.getPoints().get(i);
-                    exitIntersect[2] = polyOne.get(0).getPoints().get(trueMod((i - 1), po.getPoints().size()));
+                    exitIntersect[0] = po.getPoints().get(i);
+                    exitIntersect[1] = polyOne.get(0).getPoints().get(trueMod((i - 1), po.getPoints().size()));
                 }
                 poList.remove(po.getPoints().get(i));
             }
@@ -790,17 +819,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (currentPointInside = !previousPointInside)
                 {
                     priorityEnd = i;
-                    entryIntersect[1] = po.getPoints().get(i);
-                    entryIntersect[2] = polyOne.get(0).getPoints().get(trueMod((i - 1), po.getPoints().size()));
+                    entryIntersect[0] = po.getPoints().get(i);
+                    entryIntersect[1] = polyOne.get(0).getPoints().get(trueMod((i - 1), po.getPoints().size()));
                 }
             }
         }
-        poList.add(trueMod(priorityEnd, poList.size()), findIntersectionByPoints(entryIntersect));
+        //poList.add(trueMod(priorityEnd, poList.size()), findIntersectionByPoints(entryIntersect));
         for (int i = inList.size()-1; i > -1; i--)
         {
-            poList.add(trueMod(priorityStart, poList.size()), inList.get(i));
+            //poList.add(trueMod(priorityStart, poList.size()), inList.get(i));
         }
-        poList.add(trueMod(priorityStart, poList.size()), findIntersectionByPoints(exitIntersect));
+        //poList.add(trueMod(priorityStart, poList.size()), findIntersectionByPoints(exitIntersect));
+        for (int i = 0 ; i <  inList.size(); i++)
+        {
+            poList.add(inList.get(i));
+        }
 
         return poList;
     }
